@@ -1,0 +1,120 @@
+<?php
+/**
+ * Certificate Print
+ *
+ * @package Onestop
+ * @subpackage vendor/onestop_batch
+ * @uses Report.php
+ *
+ * This report is highly optimized for TCPDF output.
+ * It will contain formatting errors for non-TCPDF formats.
+ *
+ * This file is used in a command line php process -- for async batch pdf creation
+ **/
+
+define('TEXT_LEFT', 35);
+define('TEXT_TOP', 70);
+
+class MY_TCPDF extends TCPDF {
+	// set bacground image
+	public function Header() {
+		$bMargin = $this->getBreakMargin();
+		$auto_page_break = $this->AutoPageBreak;
+		// disable auto-page-break
+		$this->SetAutoPageBreak(false, 0);
+		$img_file = K_PATH_IMAGES.'cert_background.png';
+		$this->Image($img_file, 5, 5, 270, 205, '', '', '', true);
+		// restore auto-page-break status
+		$this->SetAutoPageBreak($auto_page_break, $bMargin);
+		// set the starting point for the page content
+		$this->setPageMark();
+	}
+}
+
+function print_cert($cert, $seq=NULL) {
+	global $GLOBAL_INI;
+
+	$pdf = new MY_TCPDF('L', PDF_UNIT, 'LETTER', true, 'UTF-8', false);
+
+	$pdf->SetCreator(PDF_CREATOR);
+	$pdf->SetAuthor('PSTB');
+	$pdf->SetTitle('Storage Tank Registration Certificate');
+
+	$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+	$pdf->SetHeaderMargin(0);
+	$pdf->SetFooterMargin(0);
+
+	$pdf->setPrintFooter(false);
+	$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+	$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+	$pdf->AddPage();
+
+	// main header --------------------------------------------------------
+	$pdf->SetFont('helvetica', 'B', 13);
+	$pdf->MultiCell(200, 0, "New Mexico Environment Department, Environmental Protection Division\nStorage Tank Registration Certificate", 0, 'C', false, 0, 54, 49);
+
+	$pdf->SetTextColor(255, 0, 0);
+	$pdf->Text(135, 71, $cert['PERMIT_NUMBER']);
+	$pdf->SetTextColor(0, 0, 0);
+
+	// owner info ---------------------------------------------------------
+	$row_y = TEXT_TOP;
+	label_data($pdf, TEXT_LEFT, $row_y, 100, 'Owner Name and Address', join_data($cert['OWNER_NAME'], $cert['OWNER_ADDRESS_1'], $cert['OWNER_ADDRESS_2'], $cert['OWNER_ADDRESS_3']));
+	label_data($pdf, TEXT_LEFT+120, $row_y, 80, 'Owner Number', $cert['OWNER_ID']);
+
+	// facility info ------------------------------------------------------
+	$row_y += 30;
+	label_data($pdf, TEXT_LEFT, $row_y, 100, 'Facility Name and Address', join_data($cert['FACILITY_NAME'], $cert['FACILITY_ADDRESS_1'], $cert['FACILITY_ADDRESS_2'], $cert['FACILITY_ADDRESS_3']));
+	label_data($pdf, TEXT_LEFT+120, $row_y, 55, "Number of Regulated Storage\nTanks at this Location", $cert['TANKS'] . ' '); // space added so 0 will print
+	label_data($pdf, TEXT_LEFT+177, $row_y, 35, 'Facility Number', $cert['FACILITY_ID']);
+
+	// registration date --------------------------------------------------
+	$row_y += 27;
+	label_data($pdf, TEXT_LEFT, $row_y, 75, 'Effective Dates of this Fee Registration:');
+	label_data($pdf, TEXT_LEFT+75, $row_y, 90, '', "July 1, {$cert['START_DATE']} to June 30, {$cert['END_DATE']}");
+
+	// paragraph ----------------------------------------------------------
+	$row_y += 5;
+	label_data($pdf, TEXT_LEFT, $row_y, 210, '', "The owner of the regulated storage tanks at this facility has complied with the registration and annual fee requirements of
+	20.5.102 NMAC, Registration of Tanks, for the number of tanks listed above.\n\nNo person shall operate a storage tank system without a current and valid registration certificate, and the operator of any storage tank system shall display a current and valid registration certificate on the premises of this facility at all times.\n\nPursuant to the Delegation Order dated January 15, 2020, the Cabinet Secretary of the Environment Department has delegated the authority to issue this certificate to the Chief of the Petroleum Storage Tank Bureau. ");
+
+	// date and signature -------------------------------------------------
+	$row_y += 43;
+	label_data($pdf, TEXT_LEFT, $row_y, 210, '', "Issued the {$cert['PERMIT_DATE_DAY']} day of {$cert['PERMIT_DATE_MONTH']}, {$cert['PERMIT_DATE_YEAR']}");
+	label_data($pdf, TEXT_LEFT+120, $row_y, 75, '', "Bureau Chief, Petroleum Storage Tank Bureau");
+
+	// save file ==========================================================
+	$filename = 'cert' . (is_null($seq) ? '' : $seq) . "_{$cert['FACILITY_ID']}";
+	$filename = "{$GLOBAL_INI['kohana']['application_path']}/cache/{$filename}.pdf";
+
+	$pdf->Output($filename, 'F'); // F = file
+
+	return($filename);
+}
+
+// local functions ----------------------------------------------
+
+/**
+ * Simplifying Wrapper for
+ * MultiCell($w, $h, $txt, $border=0, $align='J', $fill=0, $ln=1, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0)
+ * */
+function label_data(&$pdf, $x, $y, $w, $label=NULL, $data=NULL) {
+	if ($label) {
+		$pdf->SetFont('', 'B', 10.5);
+		$pdf->MultiCell($w, 0, $label, 0, 'L', false, 1, $x, $y);
+	}
+	if ($data) {
+		$pdf->SetFont('', '', 10.5);
+		$pdf->MultiCell($w, 0, $data, 0, 'L', false, 1, $x, ($label ? '' : $y));
+	}
+}
+
+function join_data() {
+	$args = array();
+	foreach(func_get_args() as $data)
+		if (! empty($data))
+			$args[] = $data;
+
+	return(implode($args, "\n"));
+}
+?>

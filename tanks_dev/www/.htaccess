@@ -1,0 +1,33 @@
+### Turn on URL rewriting
+RewriteEngine On
+
+### Put your installation directory here:
+### If your URL is www.example.com/kohana/, use /kohana/
+### If your URL is www.example.com/, use /
+RewriteBase /tanks_dev/
+
+### Protect application and system files from being viewed
+RewriteCond $1 ^(application|system)
+### Rewrite to index.php/access_denied/URL (using segments via Kohana; you must create this controller!)
+RewriteRule ^(.+)$ index.php/noaccess? [L]
+
+# Allow these directories and files to be displayed directly:
+# - index.php (DO NOT FORGET THIS!)
+# - robots.txt
+# - favicon.ico
+# - Any file inside of the images/, js/, css/ or media/ directories
+RewriteCond $1 ^(index\.php|robots\.txt|favicon\.ico|images|js|css|media|include|download)
+# No rewriting
+RewriteRule ^(.*)$ - [L]
+
+#also include any root-based image files:
+RewriteRule \.(css|jpe?g|gif|png|js)$ - [L]
+
+#this is a hack to make the media module work right: (Not currently in use!)
+#RewriteRule ^(media/.*.(gif|jpe?g|png|js))$ application/views/$0 [PT,L]
+
+# Rewrite all other URLs to index.php/URL
+RewriteRule ^(.*)$ index.php?$1 [L]
+RewriteRule ^(.*)$ index.php/$1 [PT,L]
+RewriteRule ^$ index.php [PT,L]
+

@@ -1,0 +1,281 @@
+/* Main styles including Nav for Open format */
+
+body#outer_page {
+	padding: 0;
+	border: 0;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0px;
+	margin-bottom: 20px;
+	font-family: "Times New Roman", Times, serif;
+	font-size: 12px;
+	line-height: normal;
+	color: #333333;
+	/*text-align: center;*/
+	background-image: url('../../../images/devreso/body_bg4.gif');
+	background-position: center;
+	background-repeat: repeat-y;
+	background-color: #cccccc;
+	background-attachment: fixed;
+}
+
+body#inner_page {
+	background-color: #04D369;
+	margin-top: 5px;
+}
+
+div, p, ul, li { margin: 0px; padding: 0px; }
+
+
+ol {
+	margin-bottom: 4px;
+	padding-left: 20px;
+}
+
+img 	{ border: 0px; }
+
+.content {
+	clear: both;
+}
+
+.content .navigation {
+	float: left;
+	background-repeat: no-repeat;
+	width: 216px;
+	padding-top: 12px;
+}
+
+.content .body1 {
+	float: left;
+	text-align: left;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	color: #333333;
+	width: 806px;
+	margin-left: 6px;
+	margin-top: 8px;
+	margin-right: 6px;
+	margin-bottom: 8px;
+	border: 1px solid #cccccc;
+}
+
+.content .body1 p {	padding-bottom: 10px;}
+
+.menu-trim {
+	clear: both;
+	height: 20px;
+}
+
+.copyright {
+	background-image: url('../../../images/devreso/home-copyright-boxes2.gif');
+	background-position: center;
+	background-repeat: no-repeat;
+	margin-top: 16px;
+	padding: 16px 0px; 
+	padding-left: 120px;
+	color: #0075c6;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+}
+
+.copyright a {
+	color: #9dbcb3;
+	text-decoration: underline;
+}
+
+.copyright a:hover {
+	color: #ffffff;
+	text-decoration: underline;
+}
+
+.lastupdated {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-style: italic;
+	color: #999999;
+	text-align: right;
+	padding-top: 28px;
+	padding-right: 10px;
+}
+/*
+table {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #333333;
+}
+
+td {
+	margin: 2px;
+	padding: 2px;
+	text-align: center;
+}
+
+th {
+	margin: 2px;
+	padding: 2px;
+}
+
+fieldset { padding: 0px; margin: 0px; border: 0px; }
+*/
+.struct-glove {
+	width: 835px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-bottom: 57px;
+	background-image: url('../../../images/devreso/home-bottom-ban.gif');
+	background-position: bottom center;
+	background-repeat: no-repeat;
+}
+
+.organization {
+	margin: 0px 7px;
+	border-bottom: 4px solid #4f896d;
+	border-right: 4px solid #4f896d;
+	border-left: 4px solid #4f896d;
+	width: 813px;
+	background-color: #ffffff;
+}
+/* End Main home styles, begin custom styles */
+
+.insignia {
+	float: left;
+	height: 114px;
+	width: 371px;
+	background-color: #04D369;
+	background-image: url('../../../images/devreso/home-icon-bg_test_01.gif');
+	background-position: bottom center;
+	background-repeat: no-repeat;
+	text-align: left;
+	/* border: 2px solid #333333; */
+}
+
+.insignia img {
+	padding-top: 9px;
+	padding-left: 31px;
+}
+
+.usefulness {
+	float: left;
+	height: 88px;
+	width: 442px;
+	background-color: #04D369;
+	padding-top: 26px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: white;
+	font-size: 22px;
+	font-style: italic;
+	background-image: url('../../../images/devreso/home-icon-bg_test_02.gif');
+	background-position: bottom center;
+	background-repeat: no-repeat;
+}
+
+.usefulness:after {
+    content: "TEST";
+    padding-left: 4px;
+    font-size: 1.5em;
+	color:red;
+}
+
+.search-bucket {
+	text-align: right;
+	height: 32px;
+}
+
+.search-bucket legend {
+	display: none;
+}
+
+.search-bucket .search {
+	background-color: #f6f6f6;
+	padding: 2px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	height: 17px;
+	border: 0px solid #015280;
+}
+
+.search-bucket a, .search-bucket a:hover {
+	color: #ffffff;
+}
+
+.search-bucket .submit {
+	background: #f6f6f6 url(none);
+	border: 0px solid #015280;
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	height: 21px;
+}
+
+.search-bucket .dropdown {
+	border: 0px solid #015280;
+	background-color: #f6f6f6;
+	padding: 1px 2px;
+	margin-left: 30px;
+	margin-right: 18px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+.quick-links {
+	float: right;
+	height: 25px;
+	width: 400px;
+	padding-top: 4px;
+}
+
+.quick-links li {
+	list-style: none;
+	font-family: Arial, Helvetica, sans-serif;
+	float: left;
+	padding-top: 5px;
+	height: 20px;
+}
+
+.quick-links li a {
+	display: block;
+	margin-left: 20px;
+	color: #015A8B;
+}
+
+.quick-links .special {
+	float: right;
+	padding-right: 20px;
+	width: 131px;
+	text-align: right;
+	background-color: #83a69c;
+}
+
+.slide-show {
+	height: 105px;
+	background-color: #2f6677;
+}
+
+.main-navigation {
+	clear: both;
+	height: 28px;
+	background-image: url('../../../images/devreso/home-fill-navigation2.gif');
+	font-size: 18px;
+	/*font-weight: bold;*/
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: white;
+	/*color: #ffffff;
+	font-style: italic;*/
+	text-align: left;
+	padding: 6px 0px 0px 10px;
+}
+
+.main-navigation li {
+	float: right;
+	list-style: none;
+}
+
+.main-navigation li a {
+	display: block;
+}
+
+.main-navigation .no-line {
+	border: 0px;
+}
+

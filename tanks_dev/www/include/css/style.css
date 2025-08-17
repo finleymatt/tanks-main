@@ -1,0 +1,380 @@
+BODY {
+	font-size: 13px;
+	font-family: Arial, Helvetica, sans serif;
+}
+
+H1 {
+	font-size: 13pt;
+	font-family: Arial, Helvetica, sans serif;
+	font-smooth: always;
+}
+
+P { margin: 15px; }
+
+A {
+	COLOR: #cc3300;
+	TEXT-DECORATION: none
+}
+A:hover {
+	TEXT-DECORATION: underline
+}
+
+/************* qualify general form elements with FORM so that elements not  **************
+************** inside a form will not be affected.  ex: datatable search box **************/
+FIELDSET { padding: 10px; display: inline-block; } /* fix IE fieldset width problem */
+
+FIELDSET LEGEND {
+	/* position:relative; top:-20px;  to fix IE position problem - no longer */
+	padding: 7px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+FORM INPUT {
+	margin-top: 8px;
+}
+
+FORM LABEL {
+	display: block;
+	float: left;
+	border-style:none;
+	text-align: right;
+	width: 150px;
+	margin-right: 15px;
+	margin-top: 8px;
+	color: #786145;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans serif;
+}
+
+/************* reduces form's width - used for edit forms *******************/
+FORM.edit_form {
+	min-width: 550px;
+}
+
+FORM.edit_form TABLE {
+	width: 500px;
+}
+
+FORM.edit_form TABLE TR TH {
+	width: 150px;
+}
+
+FORM.small_form FIELDSET { /***** reduces form's width - used for report forms ******/
+	min-width: 440px;
+	padding: 5px;
+}
+
+TABLE.simple_table { border: 2px solid #333; background-color:#ddd }
+TABLE.simple_table { border-collapse: collapse; }
+TABLE.simple_table th, TABLE.simple_table td { padding: 0.5em; border: 1px solid #666; }
+TABLE.simple_table th { border-bottom: 2px solid #333; }
+
+.alert { /* used to bring attention. ex: expired SL contracts */
+	padding: 2px;
+	BACKGROUND-COLOR: #ee7733;
+}
+
+.inactive { /* inactive links. ex: no priv */
+	color: #555555;
+}
+
+.required { color: #DD3333; }
+
+.pointer { cursor: pointer; }
+
+.top_menu { display:block; float:left; margin:20px 20px 20px 20px; 
+	font-size:15px; font-smooth: always;
+}
+
+.action_button {
+	float: left;
+	width: auto; min-width: 60px;
+	height: 16px;
+	padding: 2px 7px 2px 0px;
+	margin: 0px 0px 0px 4px;
+}
+
+.left_float { float: left }
+.right_float { float: right; text-align: right }
+
+.capitalize { text-transform: uppercase }
+
+/************* fade-in and fade-out effects -- used during load **********/
+.fade-in { display:none; } /* hidden initially */
+
+/************* jquery CSS customizations / overrides *****************/
+td.ui-widget-content a { color:#cc3300 }
+
+.ui-autocomplete { /* modify to display scrollbar */
+	position: relative !important;  /* fixes vertical position bug */
+	max-height: 150px;
+	overflow-y: auto;
+	overflow-x: hidden;  /* prevent horizontal scrollbar */
+	padding-right: 20px;  /* add padding to account for vertical scrollbar */
+}
+
+.ui-autocomplete-loading {
+	background: white url('../../images/ui-anim_basic_16x16.gif') right center no-repeat;
+}
+
+/************* horizontal layout table *******************/
+.horiz_table {
+	border: 1px solid;
+	background-color: #CCCCCC;
+	min-width: 300px;
+}
+
+.horiz_table td {
+	border: 1px solid #888888;
+	padding: 3px;
+}
+
+.horiz_table th {
+	border: 1px solid #888888;
+	text-align: right;
+	padding: 3px;
+}
+
+.horiz_table th.row_group_1 {
+	background-color: #88CCAA;
+}
+
+.horiz_table tfoot { font-size: 75% }
+
+
+/************* datatable styles (jquery) *******************/
+
+
+/************* form validationEngine styles (jquery) *******************/
+
+/* Z-INDEX */
+ .formError { z-index: 990; }
+    .formError .formErrorContent { z-index: 991; }
+    .formError .formErrorArrow { z-index: 996; }
+    
+    .formErrorInsideDialog.formError { z-index: 5000; }
+    .formErrorInsideDialog.formError .formErrorContent { z-index: 5001; }
+    .formErrorInsideDialog.formError .formErrorArrow { z-index: 5006; }
+
+.inputContainer {
+	position: relative;
+	float: left;
+}
+
+.formError {
+	position: absolute;
+	top: 300px;
+	left: 300px;
+	display: block;
+	cursor: pointer;
+}
+
+.ajaxSubmit {
+	padding: 20px;
+	background: #55ea55;
+	border: 1px solid #999;
+	display: none
+}
+
+.formError .formErrorContent {
+	width: 100%;
+	background: #ee0101;
+	position:relative;
+	color: #fff;
+	width: 150px;
+	font-size: 11px;
+	border: 2px solid #ddd;
+	box-shadow: 0 0 6px #000;
+	-moz-box-shadow: 0 0 6px #000;
+	-webkit-box-shadow: 0 0 6px #000;
+	padding: 4px 10px 4px 10px;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+}
+
+.greenPopup .formErrorContent {
+	background: #33be40;
+}
+
+.blackPopup .formErrorContent {
+	background: #393939;
+	color: #FFF;
+}
+
+.formError .formErrorArrow {
+	width: 15px;
+	margin: -2px 0 0 13px;
+	position:relative;
+}
+body[dir='rtl'] .formError .formErrorArrow,
+body.rtl .formError .formErrorArrow {
+	margin: -2px 13px 0 0;
+}
+
+.formError .formErrorArrowBottom {
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	margin: 0px 0 0 12px;
+	top:2px;
+}
+
+.formError .formErrorArrow div {
+	border-left: 2px solid #ddd;
+	border-right: 2px solid #ddd;
+	box-shadow: 0 2px 3px #444;
+	-moz-box-shadow: 0 2px 3px #444;
+	-webkit-box-shadow: 0 2px 3px #444;
+	font-size: 0px;
+	height: 1px;
+	background: #ee0101;
+	margin: 0 auto;
+	line-height: 0;
+	font-size: 0;
+	display: block;
+}
+
+.formError .formErrorArrowBottom div {
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+}
+
+.greenPopup .formErrorArrow div {
+	background: #33be40;
+}
+
+.blackPopup .formErrorArrow div {
+	background: #393939;
+	color: #FFF;
+}
+
+.formError .formErrorArrow .line10 {
+	width: 15px;
+	border: none;
+}
+
+.formError .formErrorArrow .line9 {
+	width: 13px;
+	border: none;
+}
+
+.formError .formErrorArrow .line8 {
+	width: 11px;
+}
+
+.formError .formErrorArrow .line7 {
+	width: 9px;
+}
+
+.formError .formErrorArrow .line6 {
+	width: 7px;
+}
+
+.formError .formErrorArrow .line5 {
+	width: 5px;
+}
+
+.formError .formErrorArrow .line4 {
+	width: 3px;
+}
+
+.formError .formErrorArrow .line3 {
+	width: 1px;
+	border-left: 2px solid #ddd;
+	border-right: 2px solid #ddd;
+	border-bottom: 0 solid #ddd;
+}
+
+.formError .formErrorArrow .line2 {
+	width: 3px;
+	border: none;
+	background: #ddd;
+}
+
+.formError .formErrorArrow .line1 {
+	width: 1px;
+	border: none;
+	background: #ddd;
+}
+
+
+/************* inner template styles *************************/
+#inner_header {
+	padding: 10px;
+	height: 100px;
+	background-color: #bdd7f2;
+	background-image: url('../../images/header.png');
+	background-repeat: no-repeat;
+	background-position: left bottom
+}
+
+/************* drop-down navigation style -- converts "li" to menu **************/
+/* remove the list style */
+.nav {
+	margin:0; 
+	padding:0; 
+	list-style:none;
+}
+
+/* make the LI display inline */
+/* it's position relative so that position absolute */
+/* can be used in submenu */
+.nav li {
+	float:left; 
+	display:block; 
+	width:105px;
+	height:35px;
+	background:#003366; 
+	position:relative;
+	z-index:500; 
+	opacity: 0.85;
+	margin:0 1px;
+}
+
+/* this is the parent menu */
+.nav li a {
+	display:block; 
+	padding:8px 5px 0 5px; 
+	font-weight:700;  
+	height:29px; 
+	text-decoration:none; 
+	text-align:center; 
+	color:#FFF; /* unselected menu text */
+}
+
+.nav li a:hover {
+	color:#FFCC66;
+}
+
+.nav a.selected {
+	color:#FFCC66;
+}
+
+/* submenu, it's hidden by default */
+.nav ul {
+	position:absolute;
+	left:0; 
+	display:none; 
+	margin:0 0 0 -1px; 
+	padding:0; 
+	list-style:none;
+}
+
+.nav ul li {
+	width:155px; 
+	float:left; 
+	border-top:1px solid #fff;
+}
+
+/* display block will make the link fill the whole area of LI */
+.nav ul a {
+	display:block;  
+	height:15px;
+	padding: 8px 5px; 
+	color:#FFF;
+	font-size:93%;
+}
+

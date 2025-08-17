@@ -1,0 +1,2707 @@
+<!-- find organization modal -->
+<div id="findOrgModal" class="modal fade">
+	<div class="modal-dialog modal-lg">
+		<form method="post" id="find_org_form" onsubmit="submitFindOrgForm(event)">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Search for an existing organization:</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<div class="modal-body">
+					<div class="form-group row">
+						<div class="col-sm-3 search_label left_label">
+							<input type="radio" name="organization" id="find_org_by_oid" onclick="organizationCriteriaSwitch(this.value)" value="org_oid" checked>
+							<label for="find_org_by_oid" class="col-form-label">Owner ID:</label>
+						</div>
+						<div class="col-sm-3">
+							<input type="number" name="org_oid" id="org_oid" class="form-control" onclick="organizationRadioSelect(this.id)" placeholder="Owner ID" min="1" max="999999999" required>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-3 search_label left_label">
+							<input type="radio" name="organization" id="find_org_by_id" onclick="organizationCriteriaSwitch(this.value)" value="tempo_organization_id">
+							<label for="find_org_by_id" class="col-form-label">Tempo Org ID:</label>
+						</div>
+						<div class="col-sm-3">
+							<input type="number" name="tempo_organization_id" id="tempo_organization_id" class="form-control" onclick="organizationRadioSelect(this.id)" placeholder="Tempo Org ID" min="1" max="999999999" required>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-sm-3 search_label left_label">
+							<input type="radio" name="organization" id="find_org_by_name" onclick="organizationCriteriaSwitch(this.value)" value="organization_name">
+							<label for="find_org_by_name" class="col-form-label">Org Name:</label>
+						</div>
+						<div class="col-sm-3">
+							<select id="organization_name_select" name="organization_name_select" class="form-control">
+								<option value="s">Starts With</option>
+								<option value="c">Contains</option>
+							</select>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" name="organization_name" id="organization_name" class="form-control" onclick="organizationRadioSelect(this.id)" placeholder="Org Name">
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-sm-3 search_label left_label">
+							<input type="radio" name="organization" id="find_org_by_addr" onclick="organizationCriteriaSwitch(this.value)" value="organization_address">
+							<label for="find_org_by_addr" class="col-form-label">Org Address:</label>
+						</div>
+						<div class="col-sm-3">
+							<select id="organization_addr_select" name="organization_addr_select" class="form-control">
+								<option value="s">Starts With</option>
+								<option value="c">Contains</option>
+							</select>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" name="organization_address" id="organization_address" class="form-control" onclick="organizationRadioSelect(this.id)" placeholder="Org Address"><br>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="ml-auto col-sm-3">
+							<input type="submit" name="action" id="find_org_action" class="btn btn-primary" value="Search">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						</div>
+					</div>
+				</div>
+
+				<div id="org_list_div" style="display: none; width: 95%; margin: auto">
+					<table id="org_list" class="stripe row-border" frame="box">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Name</th>
+								<th>Address</th>
+								<th>City</th>
+								<th>Zip</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success" id="select_org">Select</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<!-- find owner modal -->
+<div id="findOwnerModal" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <form method="post" id="find_owner_form" onsubmit="submitFindOwnerForm(event)">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Search for an existing owner:</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <div class="col-sm-3 search_label left_label">
+                            <input type="radio" name="owner" id="find_owner_by_id" onclick="ownerCriteriaSwitch(this.value)" value="owner_number" checked>
+                            <label for="find_owner_by_id" class="col-form-label">Owner ID:</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="number" name="owner_number" id="owner_number" class="form-control" onclick="ownerRadioSelect(this.id)" placeholder="Owner ID" min="1" max="999999999" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-3 search_label left_label">
+                            <input type="radio" name="owner" id="find_owner_by_name" onclick="ownerCriteriaSwitch(this.value)" value="owner_name">
+                            <label for="find_owner_by_name" class="col-form-label">Owner Name:</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <select id="owner_name_select" name="owner_name_select" class="form-control">
+                                <option value="s">Starts With</option>
+                                <option value="c">Contains</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="text" name="owner_name" id="owner_name" class="form-control" onclick="ownerRadioSelect(this.id)" placeholder="Owner Name">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-3 search_label left_label">
+                            <input type="radio" name="owner" id="find_owner_by_addr" onclick="ownerCriteriaSwitch(this.value)" value="owner_address">
+                            <label for="find_owner_by_addr" class="col-form-label">Owner Address:</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <select id="owner_addr_select" name="owner_addr_select" class="form-control">
+                                <option value="s">Starts With</option>
+                                <option value="c">Contains</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="text" name="owner_address" id="owner_address" class="form-control" onclick="ownerRadioSelect(this.id)" placeholder="Owner Address"><br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="ml-auto col-sm-3">
+                            <input type="submit" name="action" id="find_owner_action" class="btn btn-primary" value="Search">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="owner_list_div" style="display: none; width: 95%; margin: auto">
+                    <table id="owner_list" class="stripe row-border" frame="box">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tempo ID</th>
+                                <th>Is Person</th>
+                                <th>Owner Name</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th>Zip</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="select_owner">Select</button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<!-- find Facility modal -->
+<div id="findFacilityModal" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <form method="post" id="find_owner_form" onsubmit="submitFindFacilityForm(event)">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Search for an existing facility:</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <div class="col-sm-3 search_label left_label">
+                            <input type="radio" name="facility" id="find_facility_by_id" onclick="facilityCriteriaSwitch(this.value)" value="facility_number" checked>
+                            <label for="find_facility_by_id" class="col-form-label">Facility ID:</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="number" name="facility_number" id="facility_number" class="form-control" onclick="facilityRadioSelect(this.id)" placeholder="Facility ID" min="1" max="999999999" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-3 search_label left_label">
+                            <input type="radio" name="facility" id="find_facility_by_name" onclick="facilityCriteriaSwitch(this.value)" value="facility_name">
+                            <label for="find_facility_by_name" class="col-form-label">Facility Name:</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <select id="facility_name_select" name="facility_name_select" class="form-control">
+                                <option value="s">Starts With</option>
+                                <option value="c">Contains</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="text" name="facility_name" id="find_facility_name" class="form-control" onclick="facilityRadioSelect(this.id)" placeholder="Facility Name">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-3 search_label left_label">
+                            <input type="radio" name="facility" id="find_facility_by_addr" onclick="facilityCriteriaSwitch(this.value)" value="facility_address">
+                            <label for="find_facility_by_addr" class="col-form-label">Facility Address:</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <select id="facility_addr_select" name="facility_addr_select" class="form-control">
+                                <option value="s">Starts With</option>
+                                <option value="c">Contains</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="text" name="facility_address" id="facility_address" class="form-control" onclick="facilityRadioSelect(this.id)" placeholder="Facility Address"><br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="ml-auto col-sm-3">
+                            <input type="submit" name="action" id="find_facility_action" class="btn btn-primary" value="Search">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="facility_list_div" style="display: none; width: 95%; margin: auto">
+                    <table id="release_transfer_facility_list" class="stripe row-border" frame="box">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tempo ID</th>
+                                <th>Facility Name</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th>Zip</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="select">Select</button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<!-- facility onestop contact modal -->
+<div id="facOnestopModal" class="modal fade">
+    <div class="modal-dialog">
+        <form method="post" id="fac_onestop_form" onsubmit="submitFacOnestopForm(event)">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Contact</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <label>Title</label>
+                    <input type="text" name="os_title" id="os_title" class="form-control" maxlength="100"><br>
+                    <div class="required">
+                        <label>Full Name</label>
+                        <input type="text" name="full_name" id="full_name" class="form-control" maxlength="100" required><br>
+                    </div>
+                    <label>Comments</label>
+                    <input type="text" name="comments" id="comments" class="form-control" maxlength="100"><br>
+                    <label>Email</label>
+                    <input type="email" name="email" id="email" class="form-control" maxlength="100" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)?$" title="Please enter a valid email address"><br>
+                    <label>Phone</label>
+                    <input type="text" name="phone" id="phone" class="form-control" pattern="^\d{3}-\d{3}-\d{4}$" onblur="masking(this.value,this,event);" onKeyPress="masking(this.value,this,event);" maxlength="12"><br>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="onestop_id" id="onestop_id">
+                    <input type="submit" name="action" id="fac_os_action" value="Add">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- facility person relationship modal -->
+<div id="personRelationshipModal" class="modal fade">
+    <div class="modal-dialog">
+        <form method="post" id="person_relationship_form" onsubmit="submitPersonRelationForm(event)">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Relationship</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="required" id="person_rel_div">
+                        <label>Relationship</label>
+                        <select id="person_rel" name="person_rel" class="form-control">
+                            <option value="fy">Remediation Contact</option>
+                            <option value="be">Owner</option>
+                            <option value="bh">Operator</option>
+                            <option value="gd">Responsible Party</option>
+                        </select><br>
+                    </div>
+                    <div class="required" id="person_name_div">
+                        <label>Name</label>
+                        <select id="rel_per_id" name="rel_per_id" class="form-control" required>
+                            <option value="">Please Select</option>
+                            <?php 
+                                foreach ($employees as $row) {
+                                    echo '<option value="' . $row["TEMPO_PERSON_ID"] . '" >' . $row['FULL_NAME'] . '</option>';
+                                }
+                             ?>
+                        </select>
+			<br>
+                    </div>
+                    <div class="required" id="person_owner_div" style="display: none">
+                        <label>Person ID</label><button type="button" name="add" id="find_person" data-toggle="modal" data-target="#findPersonModal" class="btn btn-info btn-sm" onclick="ShowFindPersonForm()" style="float:right;margin-bottom:5px;">Find Person</button>
+                        <div id="person_suggestion-box"></div>
+                        <input type="text" name="person_owner_id" id="person_owner_id" class="form-control" maxlength="100" autocomplete="off" disabled><br>
+                    </div>
+                    <div class="required" id="person_start_date_div">
+                        <label>Start Date</label>
+                        <input type="date" name="person_start_date" id="person_start_date" class="form-control date"><br>
+                    </div>
+                    <div class="required" id="person_end_date_div">
+                        <label>End Date</label>
+                        <input type="date" name="person_end_date" id="person_end_date" class="form-control date"><br>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!-- in case users want to end person or relation that aren't in the list yet -->
+                    <input type="hidden" name="person_id" id="person_id">
+                    <input type="hidden" name="person_relation" id="person_relation">`<input type="submit" name="action" id="person_action" value="Add">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- facility organization relationship modal -->
+<div id="relationshipModal" class="modal fade">
+    <div class="modal-dialog">
+        <form method="post" id="relationship_form" onsubmit="submitOrgRelationForm(event)">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Relationship</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="required" id="org_relation_div">
+		    	<label>Relationship</label>
+			<select id="relationship" name="relationship" class="form-control">
+				<option value="ea">Owner</option>
+				<option value="ge">Responsible Party</option>
+				<option value="fa">Operator</option>
+			</select><br>
+		    </div>	
+		    <div class="required" id="org_id_div">
+                        <label>Organization ID</label><button type="button" name="add" id="find_org" data-toggle="modal" data-target="#findOrgModal" class="btn btn-info btn-sm" onclick="ShowFindOrgForm()" style="float:right;margin-bottom:5px;">Find Organization</button>
+                        <div id="suggesstion-box"></div>
+                        <input type="text" name="rel_org_id" id="rel_org_id" class="form-control" maxlength="100" autocomplete="off" disabled required><br>
+                    </div>
+                    <div class="required" id="org_start_date_div">
+                        <label id="person_start_date_lbl">Start Date</label>
+                        <input type="date" name="org_rel_start_date" id="org_rel_start_date" class="form-control date"><br>
+                    </div>
+                    <div class="required" id="org_end_date_div">
+                        <label id="person_end_date_lbl">End Date</label>
+                        <input type="date" name="org_rel_end_date" id="org_rel_end_date" class="form-control date"><br>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="previous_relation" id="previous_relation">
+                    <input type="submit" name="action" id="org_action" value="Add">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- change facility name modal -->
+<div id="changeFacilityNameModal" class="modal fade">
+        <div class="modal-dialog">
+	        <form method="post" id="change_facility_name_form" onsubmit="UpdateFacility(event)">
+		        <div class="modal-content">
+			        <div class="modal-header">
+				        <h4 class="modal-title">Change Facility Name</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<!--<input type="checkbox" name="administrative_change" id="administrative_change">
+					<label for="administrative_change">Administrative Change</label>-->
+					<br><label>New Name</label>
+					<input type="text" name="new_fac_name" id="new_fac_name" class="form-control"
+					value="<?php echo (!isset($facility) || count($facility_main) == 0) ? "" : $facility_main[0]['AI_NAME'] ?>" maxlength="100" required><br>
+					<label>Name Change Date</label><br>
+					<input type="date" name="name_change_date" id="name_change_date" class="form-control date" required><br>
+				</div>
+				<div class="modal-footer">
+					<input type="submit" name="action" id="change_name_action" value="Submit">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<!-- find person modal -->
+<div id="findPersonModal" class="modal fade">
+	<div class="modal-dialog modal-lg">
+		<form method="post" id="find_org_form" onsubmit="submitFindPersonForm(event)">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Search for an existing person:</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<div class="modal-body">
+					<div class="form-group row">
+						<div class="col-sm-3 search_label left_label">
+							<input type="radio" name="person" id="find_person_by_oid" onclick="personCriteriaSwitch(this.value)" value="person_oid" checked>
+							<label for="find_person_by_oid" class="col-form-label">Owner ID:</label>
+						</div>
+						<div class="col-sm-3">
+							<input type="number" name="person_oid" id="person_oid" class="form-control"
+							onclick="personRadioSelect(this.id)" placeholder="Owner ID" min="1" max="999999999" required>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-3 search_label left_label">
+							<input type="radio" name="person" id="find_person_by_id" onclick="personCriteriaSwitch(this.value)" value="tempo-person-id">
+							<label for="find_person_by_id" class="col-form-label">Tempo Person ID:</label>
+						</div>
+						<div class="col-sm-3">
+							<input type="number" name="tempo-person-id" id="tempo-person-id" class="form-control"
+							onclick="personRadioSelect(this.id)" placeholder="Tempo Person ID" min="1" max="999999999" required>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-3 search_label left_label">
+							<input type="radio" name="person" id="find_person_by_name" onclick="personCriteriaSwitch(this.value)" value="person_name">
+							<label for="find_person_by_name" class="col-form-label">Person Name:</label>
+						</div>
+						<div class="col-sm-3">
+							<select id="person_name_select" name="person_name_select" class="form-control">
+								<option value="s">Starts With</option>
+								<option value="c">Contains</option>
+							</select>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" name="person_name" id="person_name" class="form-control"
+							onclick="personRadioSelect(this.id)" placeholder="Person Name">
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-3 search_label left_label">
+							<input type="radio" name="person" id="find_person_by_addr" onclick="personCriteriaSwitch(this.value)" value="person_address">
+							<label for="find_person_by_addr" class="col-form-label">Person Address:</label>
+						</div>
+						<div class="col-sm-3">
+							<select id="person_addr_select" name="person_addr_select" class="form-control">
+								<option value="s">Starts With</option>
+								<option value="c">Contains</option>
+							</select>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" name="person_address" id="person_address" class="form-control"
+							onclick="personRadioSelect(this.id)" placeholder="Person Address"><br>
+						</div>
+					</div>
+					<div class="row">
+						<div class="ml-auto col-sm-3">
+							<input type="submit" name="action" id="find_person_action" class="btn btn-primary" value="Search">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						</div>
+					</div>
+				</div>
+				<div id="person_list_div" style="display: none; width: 95%; margin: auto">
+					<table id="person_list" class="stripe row-border" frame="box">
+						<thead><tr>
+							<th>ID</th><th>Name</th><th>Address</th><th>City</th><th>Zip</th>
+						</tr></thead>
+						<tbody></tbody>
+					</table>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success" id="select_person">Select</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div>
+
+<div class="wrap">
+    
+        <?php 
+		$tempo_ai_id = (!isset($facility) || count($facility_main) == 0) ? "" : $facility_main[0]['TEMPO_AI_ID'];
+		$create_update = (!isset($facility) || count($facility_main) == 0) ? "Create" : "Update";	
+	?>
+        <form id="fac_detail"  method="post" onsubmit="UpdateFacility(event)">
+	    <div class="row" style="display:none">
+	    	<div class="alert alert-success alert-dismissible" role="alert" style="width:auto">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<strong>The facility has been created/updated successfully.</strong>
+		</div>
+	    </div>
+            <div class="form-group row submit_div">
+                <h4 class="bold">Facility</h4>
+		
+                <!-- Submit button 1 -->
+                <div class="col-12 text-right" style="margin: 5px">
+		    <!--<button type="button" class="btn btn-primary save_cancel_button" name="submit_fac_detail" id="submit_fac_detail_1" data-toggle="modal" data-target="#facilityConfirmModal"><?php echo $create_update; ?></button>-->
+                    <input type="submit" name="submit_fac_detail" id="submit_fac_detail_1" class="btn btn-primary save_cancel_button" value="<?php echo $create_update; ?>">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="facility_id" class="col-sm-2 col-form-label text-right">Facility ID:</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="facility_id" name="facility_id" value="<?php echo (!isset($facility) || count($facility_main) == 0) ? "" : $facility_main[0]['AI_ALT_ID'] ?>">
+                </div>
+                <label for="tp_ai_id" class="col-sm-2 col-form-label text-right">Tempo AI ID:</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="tp_ai_id" name="tempo_ai_id" value="<?php echo $tempo_ai_id ?>">
+                </div>
+            </div>
+	    <?php $disabled = empty($tempo_ai_id) ? '' : 'disabled'; ?>
+            <div class="form-group row required">
+                <label for="facility_name" class="col-sm-2 col-form-label text-right">Facility Name:</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="facility_name" name="facility_name" value="<?php echo (!isset($facility) || count($facility_main) == 0) ? "" : $facility_main[0]['AI_NAME'] ?>" maxlength="100" tabindex="1" autofocus required <?php echo $disabled; ?>  >
+                </div>
+		<div id="change_fac_name_section" style="<?php if(empty($tempo_ai_id)) echo 'display: none'; ?>">
+			<button type="button" class="btn btn-danger" name="change_fac_name" id="change_fac_name" data-toggle="modal" data-target="#changeFacilityNameModal">Change Name</button>
+		</div>
+            </div>
+            <div class="form-group row required">
+                <label for="facility_type" class="col-sm-2 col-form-label text-right">Facility Type:</label>
+                <div class="col-sm-4">
+                    <select id="facility_type" name="facility_type" class="form-control" tabindex="2" required>
+                        <option value="">Please Select</option>
+                        <?php 
+                            foreach ($fac_types as $row) {
+                                if (count($facility_main) == 0){
+                                    $selected = "";
+                                } else {
+                                    $selected = $facility_main[0]['AI_TYPE_CODE'] == $row['AI_TYPE_CODE'] ? 'selected' : '';
+                                }
+                                echo '<option value="' . $row["AI_TYPE_CODE"] . '" ' . $selected . '>' . $row['AI_TYPE_DESCRIPTION'] . '</option>';
+                            }
+                         ?>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="alt_facility_type" class="col-sm-2 col-form-label text-right">Alt. Facility Type:</label>
+                <div class="col-sm-4">
+                    <select id="alt_facility_type" name="alt_facility_type" class="form-control" tabindex="3">
+                        <option value="">Please Select</option>
+                        <?php 
+                            foreach ($alt_fac_types as $row) {
+                                if (count($facility_main) == 0){
+                                    $selected = "";
+                                } else {
+                                    $selected = $facility_main[0]['AI_ALT_TYPE_CODE'] == $row['AI_TYPE_CODE'] ? 'selected' : '';
+                                }
+                                echo '<option value="' . $row["AI_TYPE_CODE"] . '" ' . $selected . '>' . $row['AI_TYPE_DESCRIPTION'] . '</option>';
+                            }
+                         ?>
+                    </select>
+                </div>
+            </div>
+
+            <div  class="form-group row required">
+                <label for="fac_start_date" class="col-sm-2 col-form-label text-right">Start Date:</label>
+                <div class="col-sm-3">
+                    <input class="form-control date" type="date" id="fac_start_date" value="<?php echo empty($tempo_ai_id) ? '' : format_date($facility_main[0]['AI_START_DATE']) ?>" tabindex="4" required>
+                </div>
+            </div>
+
+            <div  class="form-group row required" id="owner_div" style="<?php if(!empty($tempo_ai_id)) echo 'display: none'; ?>">
+                <label for="fac_owner_id" class="col-sm-2 col-form-label text-right">Owner ID: </label>
+                <div class="col-sm-2">
+
+                    <input type="text" name="fac_owner_id" id="fac_owner_id" class="form-control readonly" maxlength="100" autocomplete="off" <?php if(empty($tempo_ai_id)) echo 'required'; ?> oninvalid="this.setCustomValidity('Please select an owner using \'Find Owner\' button')">
+                    <input type="hidden" name="tempo_id" id="tempo_id">
+                    <input type="hidden" name="is_person" id="is_person">
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" name="add" id="find_owner" data-toggle="modal" data-target="#findOwnerModal" class="btn btn-info" onclick="ShowFindOwnerForm()" style="margin-left: 20px;margin-right: 20px; margin-bottom: 10px;">Find Owner</button>
+                </div>
+            </div>
+	    <!-- comment temporarily and wait for history comments functionality -->
+	    <!--<div class="form-group row">
+	    	<label for="ai_comments" class="col-sm-2 col-form-label text-right">Comments:</label>
+		<div class="col-sm-4">
+			<input type="text" class="form-control" id="ai_comments" name="ai_comments" value="<?php //echo (!isset($facility) || count($facility_main) == 0) ? "" : $facility_main[0]['AI_COMMENTS'] ?>" maxlength="100" tabindex="5">
+		</div>
+	    </div>-->
+
+            <?php $display = empty($tempo_ai_id) ? 'display:none' : ''; ?>
+            <div style="<?php echo $display; ?>">
+
+                <!-- Facility Owner History -->
+                <div class="form-group row col-sm-6 top-space">
+                    <span class="col-form-label bold underscore">Facility History</span>
+                </div>
+
+                <div>
+                    <table id="historic_owner_list" class="stripe row-border" frame="box" style="width: 99%; margin-left: 8px">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="form-group row top-space">
+                <span class="col-sm-2 col-form-label bold underscore">Physical Address</span>
+                <button type="button" class="btn btn-primary offset-sm-3" id="fac_copy" onclick="CopyFacilityAddress()">Copy>>></button>
+                <span class="col-sm-2 col-form-label bold underscore">Mailing Address</span>
+            </div>
+            <div class="form-group row required">
+                <label for="fac_phy_addr_1" class="col-sm-2 col-form-label text-right">Line 1:</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="fac_phy_addr_1" name="fac_phy_addr_1" value="<?php echo (!isset($facility) || count($facility_main) == 0) ? "" :  $facility_main[0]['AI_PHYS_ADDR_LINE1'] ?>" maxlength="100" tabindex="6" required>
+                </div>
+                <label for="fac_mail_addr_1" class="col-sm-2 col-form-label text-right">Line 1:</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="fac_mail_addr_1" name="fac_mail_addr_1" value="<?php echo (!isset($facility) || count($facility_main) == 0) ? "" :  $facility_main[0]['AI_MAIL_ADDR_LINE1'] ?>" maxlength="100" tabindex="12" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="fac_phy_addr_2" class="col-sm-2 col-form-label text-right">Line 2:</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="fac_phy_addr_2" name="fac_phy_addr_2" value="<?php echo (!isset($facility) || count($facility_main) == 0) ? "" :  $facility_main[0]['AI_PHYS_ADDR_LINE2'] ?>" maxlength="100" tabindex="7">
+                </div>
+                <label for="fac_mail_addr_2" class="col-sm-2 col-form-label text-right">Line 2:</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="fac_mail_addr_2" name="fac_mail_addr_2" value="<?php echo (!isset($facility) || count($facility_main) == 0) ? "" :  $facility_main[0]['AI_MAIL_ADDR__LINE2'] ?>" maxlength="100" tabindex="13">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="fac_phy_addr_3" class="col-sm-2 col-form-label text-right">Line 3:</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="fac_phy_addr_3" name="fac_phy_addr_3" value="<?php echo (!isset($facility) || count($facility_main) == 0) ? "" :  $facility_main[0]['AI_PHYS_ADDR_LINE3'] ?>" maxlength="100" tabindex="8">
+                </div>
+                 <label for="fac_mail_addr_3" class="col-sm-2 col-form-label text-right">Line 3:</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="fac_mail_addr_3" name="fac_mail_addr_3" value="<?php echo (!isset($facility) || count($facility_main) == 0) ? "" :  $facility_main[0]['AI_MAIL_ADDR__LINE3'] ?>" maxlength="100" tabindex="14">
+                </div>
+            </div>
+            <div class="form-group row required">
+                <label for="fac_phy_city" class="col-sm-2 col-form-label text-right">City:</label>
+                <div class="col-sm-3">
+                    <select id="fac_phy_city" name="fac_phy_city" class="form-control" onchange="getRegionByCity()" tabindex="9" required>
+                        <option value="">Please Select</option>
+                        <?php 
+                            foreach ($cities as $row) {
+                                $selected = (!isset($facility) || count($facility_main) == 0 || $facility_main[0]['AI_PHYS_ADDR_CITY'] !== $row['MUNICIPALITY']) ? '' : 'selected';
+                                echo '<option value="' . $row["MUNICIPALITY"] . '" ' . $selected . '>' . $row['MUNICIPALITY'] . '</option>';
+                            }
+                         ?>
+                    </select>
+                </div>
+                <label for="fac_mail_city" class="col-sm-2 col-form-label text-right">City:</label>
+                <div class="col-sm-3">
+                    <input type="text" id="fac_mail_city" class="form-control" list="fac_mail_city_list" value="<?php echo empty($tempo_ai_id) ? '' : $facility_main[0]['AI_MAIL_ADDR__CITY']; ?>" maxlength="100" tabindex="15" required>
+                    <datalist id="fac_mail_city_list">
+                        <?php 
+                            foreach ($cities as $row) {
+                                echo '<option>' . $row['MUNICIPALITY'] . '</option>';
+                            }
+                         ?>
+                    </datalist>
+                </div>
+            </div>
+            <div class="form-group row required">
+                <label for="fac_phy_state" class="col-sm-2 col-form-label text-right">State:</label>
+                <div class="col-sm-3">
+                    <?php $display_nm_state = empty($tempo_ai_id) ? '' : 'display:none'; ?>
+                    <div style="<?php echo $display_nm_state; ?>">
+                        <select id="fac_phy_state" name="fac_phy_state" class="form-control" tabindex="10" required>
+                            <?php
+                                foreach ($states as $row) {
+                                    $selected = ($row['STATE_CODE'] == 'NM') ? 'selected' : '';
+                                    echo '<option value="' . $row["STATE_CODE"] . '" ' . $selected . '>' . $row['STATE_DESCRIPTION'] . '</option>';
+                                }
+                             ?>
+                        </select>
+                    </div>
+                    <div style="<?php echo $display; ?>">
+                        <select id="fac_phy_state" name="fac_phy_state" class="form-control" tabindex="10" required>
+                            <?php
+                                foreach ($states as $row) {
+                                    $selected = (!isset($facility) || count($facility_main) == 0 || $facility_main[0]['AI_PHYS_ADDR_STATE_CODE'] !== $row['STATE_CODE']) ? '' : 'selected';
+                                    echo '<option value="' . $row["STATE_CODE"] . '" ' . $selected . '>' . $row['STATE_DESCRIPTION'] . '</option>';
+                                }
+                             ?>
+                        </select>
+                    </div>
+                </div>
+                <label for="fac_mail_state" class="col-sm-2 offset-sm col-form-label text-right">State:</label>
+                <div class="col-sm-3">
+                    <select id="fac_mail_state" name="fac_mail_state" class="form-control" tabindex="16" required>
+                        <option value="">Please Select</option>
+                        <?php 
+                            foreach ($states as $row) {
+                                $selected = $facility_main[0]['AI_MAIL_ADDR__STATE_CODE'] == $row['STATE_CODE'] ? 'selected' : '';
+                                echo '<option value="' . $row["STATE_CODE"] . '" ' . $selected . '>' . $row['STATE_DESCRIPTION'] . '</option>';
+                            }
+                         ?>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row required">
+                <label for="fac_phy_zip" class="col-sm-2 col-form-label text-right">ZIP:</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="fac_phy_zip" name="fac_phy_zip" value="<?php echo (!isset($facility) || count($facility_main) == 0) ? "" : trim($facility_main[0]['AI_PHYS_ADDR_ZIP']) ?>" maxlength="10" tabindex="11" required>
+                </div>
+                <label for="fac_mail_zip" class="col-sm-2 offset-sm-1 col-form-label text-right">ZIP:</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="fac_mail_zip" name="fac_mail_zip" value="<?php echo (!isset($facility) || count($facility_main) == 0) ? "" : trim($facility_main[0]['AI_MAIL_ADDR__ZIP']) ?>" maxlength="10" tabindex="17" required>
+                </div>
+            </div>
+            <div class="form-group row" style="margin-top: 60px">
+                <label for="district_office" class="col-sm-2 col-form-label text-right">District Office:</label>
+                <div class="col-sm-2">
+                    <select id="district_office" name="district_office" class="form-control" tabindex="18">
+                        <option value="">Please Select</option>
+                        <?php 
+                            foreach ($district_offices as $row) {
+                                $selected = (!isset($facility) || count($facility_main) == 0 || $facility_main[0]['AI_PHYS_ADDR_DISTRICT_CODE'] !== $row['DISTRICT_CODE']) ? '' : 'selected';
+                                echo '<option value="' . $row["DISTRICT_CODE"] . '" ' . $selected . '>' . $row['DISTRICT_DESCRIPTION'] . '</option>';
+                            }
+                         ?>
+                    </select>
+                </div>
+                <label for="lat" class="col-sm-2 offset-sm-1 col-form-label text-right">Latitude:</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="lat" name="latitude" value="<?php echo (!isset($facility) || count($facility_main) == 0) ? "" : trim($facility_main[0]['AI_PHYS_ADDR_LATITUDE']) ?>" pattern="^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))\s*$" title="Please enter a valid latitude, e.g. 32.381011" tabindex="21">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="field_office" class="col-sm-2 col-form-label text-right">Field Office:</label>
+                <div class="col-sm-2">
+                    <select id="field_office" name="field_office" class="form-control" tabindex="19">
+                        <option value="" >Please Select</option>
+                    </select>
+                </div>
+               <label for="long" class="col-sm-2 offset-sm-1 col-form-label text-right">Longitude:</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="long" name="longitude" value="<?php echo (!isset($facility) || count($facility_main) == 0) ? "" : trim($facility_main[0]['AI_PHYS_ADDR_LONGITUDE']) ?>" pattern="^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))\s*$" title="Please enter a valid latitude, e.g. -106.480266" tabindex="22" >
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="county" class="col-sm-2 col-form-label text-right">County:</label>
+                <div class="col-sm-2">
+                    <select id="county" name="county" class="form-control" tabindex="20">
+                        <option value="">Please Select</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row top-space">
+                <span class="col-sm-3 col-form-label bold underscore">Main Contact Information</span>
+            </div>
+            <div class="form-group row">
+                <?php
+                    $phone = '';
+                    $email = '';
+                    if(isset($facility)){
+                        foreach ($facility_tele as $row) {
+                            if($row['TELECOM_TYPE_CODE'] == 'WP'){
+                                $phone = $row['TELECOM_INFORMATION'];
+                            }else if($row['TELECOM_TYPE_CODE'] == 'EM'){
+                                $email = $row['TELECOM_INFORMATION'];
+                            }
+                        }
+                    }
+                ?>
+                <label for="fac_phone" class="col-sm-2 col-form-label text-right">Phone Number:</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="fac_phone" name="facility_phone" value="<?php echo $phone ?>" value="<?php echo $phone ?>" pattern="^\d{3}-\d{3}-\d{4}$" onblur="masking(this.value,this,event);" onKeyPress="masking(this.value,this,event);" maxlength="12" tabindex="23">
+                </div>
+                <label for="fac_email_addr" class="col-sm-2 col-form-label text-right">Email Address:</label>
+                <div class="col-sm-3">
+                    <input type="email" class="form-control" id="fac_email_addr" name="facility_email" value="<?php echo $email ?>" maxlength="100" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)?$" title="Please enter a valid email address" tabindex="24">
+                </div>
+            </div>
+            <?php $display = (!isset($facility) || count($facility_main) == 0) ? 'display:none' : ''; ?>
+            <div style="<?php echo $display; ?>">
+
+                <!-- Additional Onestop Contact Information -->
+                <div class="form-group row col-sm-6 top-space">
+                    <span class="col-form-label bold underscore">Additional OneStop Contact Information</span>
+                </div>
+                <div>
+                    <button type="button" name="add" id="add_onestop" data-toggle="modal" data-target="#facOnestopModal" class="btn btn-success btn-sm" onclick="ShowEmptyOSForm()" style="margin-left: 20px;margin-right: 20px; margin-bottom: 10px; width: 58.47px">Add</button>
+                </div>
+                <div>
+                    <table id="fac_onestop_list" class="stripe row-border" frame="box" style="width: 99%; margin-left: 8px">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Full Name</th>
+                                <th>Comments</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Update</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Facility Person Relationships -->
+                <div class="form-group row col-sm-6 top-space">
+                    <span class="col-form-label bold underscore">
+                        <div class="tooltip-info">Facility Person Relationships&nbsp;<i class="fa fa-info-circle" style="font-size:20px;color:grey"></i>
+                                 <span class="tooltiptext">Only enter here if facility is owned by an individual/person. Do not enter business or corporation data.</span>
+                        </div>
+                    </span>
+                </div>
+
+                <div>
+                    <button type="button" name="add_ppl_relationship" id="add_ppl_relationship" data-toggle="modal" data-target="#personRelationshipModal" class="btn btn-success btn-sm" onclick="ShowEmptyPersonRelForm()" style="margin-left: 20px;margin-right: 20px; margin-bottom: 10px; width: 58.47px">Add</button>
+                </div>
+                <div>
+                    <table id="ppl_relationships_list" class="stripe row-border" frame="box" style="width: 99%; margin-left: 8px">
+                        <thead>
+                            <tr>
+                                <th>Person ID</th>
+                                <th>Name</th>
+                                <th>Relationship</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+				<th>Update</th>
+                                <th>End</th>
+				<th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Facility Organization Relationships -->
+                <div class="form-group row col-sm-6 top-space">
+                    <span class="col-form-label bold underscore">
+                        <div class="tooltip-info">Facility Organization Relationships&nbsp;<i class="fa fa-info-circle" style="font-size:20px;color:grey"></i>
+                                <span class="tooltiptext">Only enter here if facility is owned by a business or corporation. Do not enter individual/person relationship.</span>
+                        </div>
+                    </span>
+                </div>
+
+                <div>
+                    <button type="button" name="add_relationship" id="add_relationship" data-toggle="modal" data-target="#relationshipModal" class="btn btn-success btn-sm" onclick="ShowEmptyOrgRelForm()" style="margin-left: 20px;margin-right: 20px; margin-bottom: 10px; width: 58.47px">Add</button>
+                </div>
+                <div>
+                    <table id="fac_relationships_list" class="stripe row-border" frame="box" style="width: 99%; margin-left: 8px">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Entity Name</th>
+                                <th>Entity Address</th>
+                                <th>Relationship</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Update</th>
+                                <th>End</th>
+				<th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Remedial Actions List -->
+                <div class="form-group row col-sm-6 top-space">
+                    <span class="col-form-label bold underscore">Remedial Actions List</span>
+                </div>
+                <div>
+                    <table id="remedial_action_list" class="stripe row-border" frame="box" style="width: 99%; margin-left: 8px">
+                        <thead>
+                            <tr>
+                                <th>Release ID</th>
+                                <th>Report Date</th>
+                                <th>Release Name</th>
+                                <th>Responsible Party</th>
+				<th>Release Status</th>
+                                <th>Status Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                $remedial = is_null($remedial) ? array() : $remedial;
+                                foreach($remedial as $row){
+                                    echo '<tr>';
+                                    echo '<td><a href="'. base_url() . REMEDIAL_ACTION . $tempo_ai_id . '/' . $row["TEMPO_SI_ID"] .'">'.$row["RELEASE_ID"].'</td>';
+                                    echo '<td>' . format_date($row["REPORT_DATE"]) . '</td>';
+                                    echo '<td>'. $row["RELEASE_DESCRIPTION"] . '</td>';
+                                    echo '<td>'. $row["RESPONSIBLE_PARTY"] . '</td>';
+				    echo '<td>'. $row["RECENT_STATUS"] . '</td>';
+				    echo '<td>'. format_date($row["RECENT_STATUS_DATE"]) . '</td>';
+                                    echo '</tr>';
+                                }
+                            ?>
+                        </tbody>
+                    </table>
+                    <a class="btn btn-primary" style="margin-top: 10px;margin-bottom: 30px" href="<?php echo base_url() . REMEDIAL_ACTION . $tempo_ai_id; ?>" role="button">Create New Action</a>
+                </div>
+            </div>
+
+            <!-- Submit button 2 -->
+            <div class="form-group row submit_div">
+                <div class="col-12 text-right" style="margin: 5px">
+
+                    <input type="hidden" name="api_url" id="api_url" value="<?php echo $api_url; ?>">
+                    <input type="hidden" name="base_url" id="base_url" value="<?php echo $base_url; ?>">
+                    <input type="hidden" id="old_facility_name" name="old_facility_name" value="<?php if(!empty($tempo_ai_id)) echo $facility_main[0]['AI_NAME'] ?>">
+                    <input type="hidden" name="person_owner" id="person_owner">
+                    <input type="hidden" id="field_office_code" name="field_office_code" value="<?php echo (!isset($facility) || count($facility_main) == 0) ? "" :  $facility_main[0]['AI_PHYS_ADDR_FIELD_OFFICE_CODE'] ?>">
+                    <input type="hidden" name="district_office_code" id="district_office_code" value="<?php echo (!isset($facility) || count($facility_main) == 0) ? "" :  $facility_main[0]['AI_PHYS_ADDR_DISTRICT_CODE'] ?>">
+                    <input type="hidden" name="county_code" id="county_code" value="<?php echo !empty($tempo_ai_id) ? $region[0]['COUNTY_CODE'] : '' ; ?>">
+                    <input type="hidden" name="fac_user" id="fac_user" value="<?php echo $user; ?>">
+		    <!--<button type="button" class="btn btn-primary save_cancel_button" name="submit_fac_detail" id="submit_fac_detail_2" data-toggle="modal" data-target="#facilityConfirmModal"><?php echo $create_update; ?></button>-->
+                    <input type="submit" name="submit_fac_detail" id="submit_fac_detail_2" class="btn btn-primary save_cancel_button" value="<?php echo empty($tempo_ai_id) ? 'Create' : 'Update'; ?>"></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<button onclick="topFunction()" id="topBtn" title="Go to top">Top</button>
+
+<script>
+    var tempo_ai_id = $("#tp_ai_id").val();
+    var facility_id = $("#facility_id").val();
+    var api_url = $("#api_url").val();
+    var base_url = $("#base_url").val();
+    var district_office_code = $('#district_office_code').val();
+    var county_code = $('#county_code').val();
+    var role = 'OWNER';
+
+    // allow a field be both readonly and required
+    $(".readonly").keydown(function(e){
+    	e.preventDefault();
+    });
+
+    // regular expression for new facility name not match the old name
+    var pattern = "(?!^" + $('#facility_name').val() + "$)(?!^\\\s+$)(^.*$)";
+    $('#new_fac_name').prop('pattern', pattern);
+    $('#new_fac_name').prop('title', 'Please enter a different name');
+
+    // set form to default once find owner modal pop up
+    $('#findOwnerModal').on('shown.bs.modal', function () {
+        $('#find_owner_by_id').prop('checked', true);
+        $('#owner_number').prop('readonly', false);
+        $('#owner_name, #owner_address').prop('readonly', true);
+        $('#owner_name_select, #owner_addr_select').prop('disabled', true);
+        $('#owner_number').focus();
+        $('#owner_number, #owner_name, #owner_address').val('');
+        $('#owner_name_select, #owner_addr_select').val('s');
+        $('#owner_name').val('');
+        $('#owner_address').val('');
+    })
+
+
+    // change person relation drop down options
+    $('#person_rel').change(function() {
+        if(this.value == 'fy') {
+            $('#person_name_div').show();
+            $('#person_owner_div').hide();
+            $('#rel_per_id').val('');
+            $('#person_start_date').val('');
+            $('#rel_per_id').prop('required', true);
+            $('#person_owner_id').prop('required', false);
+        } else {
+            $('#person_name_div').hide();
+            $('#person_owner_div').show();
+            $('#person_owner_id').val('');
+            $('#person_start_date').val('');
+            $('#rel_per_id').prop('required', false);
+            $('#person_owner_id').prop('required', true);
+            if(this.value == 'be') {
+                role = 'OWNER';
+            }else if(this.value == 'bh') {
+                role = 'OPERATOR';
+            }
+        }
+    });
+
+    // select single record from person list
+    $('#person_list tbody').on( 'click', 'tr', function () {
+    	if ( $(this).hasClass('selected') ) {
+		$(this).removeClass('selected');
+	}else{
+		$('#person_list').DataTable().$('tr.selected').removeClass('selected');
+		$(this).addClass('selected');
+	}
+    });
+
+    // keep the selected person on record
+    $('#select_person').click( function () {
+    	if($('#person_list').DataTable().rows('.selected').data().length == 0){
+		alert('Please select a record');
+	} else{
+		var tempo_person_id = $('#person_list').DataTable().rows('.selected').data()[0][0];
+		$('#findPersonModal').modal('hide');
+		$('#person_owner_id').val(tempo_person_id);
+	}
+    });
+
+    // select single record from org list
+    $('#org_list tbody').on( 'click', 'tr', function () {
+    	if ( $(this).hasClass('selected') ) {
+		$(this).removeClass('selected');
+	}else{
+		$('#org_list').DataTable().$('tr.selected').removeClass('selected');
+		$(this).addClass('selected');
+	}
+    });
+
+    // keep the selected org on record
+    $('#select_org').click( function () {
+    	if($('#org_list').DataTable().rows('.selected').data().length == 0){
+		alert('Please select a record');
+	} else{
+		var tempo_org_id = $('#org_list').DataTable().rows('.selected').data()[0][0];
+		$('#findOrgModal').modal('hide');
+		$('#rel_org_id').val(tempo_org_id);
+	}
+    });
+
+    // select single record from owner list
+    $('#owner_list tbody').on( 'click', 'tr', function () {
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+            $('#owner_list').DataTable().$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+    } );
+
+    // keep the selected owner on record
+    $('#select_owner').click( function () {
+        if($('#owner_list').DataTable().rows('.selected').data().length == 0){
+            alert('Please select a record');
+        } else{
+            var owner_id = $('#owner_list').DataTable().rows('.selected').data()[0][0];
+            var tempo_id = $('#owner_list').DataTable().rows('.selected').data()[0][1];
+            var is_person = $('#owner_list').DataTable().rows('.selected').data()[0][2];
+            $('#findOwnerModal').modal('hide');
+            $('#fac_owner_id').val(owner_id);
+            $('#tempo_id').val(tempo_id);
+            $('#is_person').val(is_person);
+        }
+    } );
+
+    $(document).on('show.bs.modal', '.modal', function (event) {
+    	var zIndex = 1040 + (10 * $('.modal:visible').length);
+	$(this).css('z-index', zIndex);
+	setTimeout(function() {
+		$('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+	}, 0);
+    });
+
+    loadFieldOfficeandCountyList(district_office_code, county_code);
+    var onestop_url = api_url + "organization/contacts/";
+    loadFacilityHistory();
+    loadOneStopContacts();
+    loadFacilityPersonRelationships();
+    loadFacilityOrganizationRelationships();
+    // loadRemedialActionsList();
+
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function() {scrollFunction()};
+
+    // use type ahead to find person ID
+    $("#person_owner_id").keyup(function(){
+        if( this.value.length < 4 ) return;
+        $.ajax({
+        type: "GET",
+        url: api_url + "organization/personlist?bureau=PSTB&personrole=" + role,
+        data:'personname=C' + $(this).val(),
+        beforeSend: function(){
+                $("#person_owner_id").css("background","#FFF  no-repeat 165px");
+        },
+        success: function(data){
+                var objects =  $.parseJSON(JSON.stringify(data['result']));
+                var person_html = '<ul id="person-list">';
+                for (var i in objects) {
+                         person_html += "<li class='list-group-item' onClick=selectPersonId("+ objects[i].TEMPO_PERSON_ID +")>" +"Owner ID:<i>"+objects[i].ALT_PERSON_ID+ "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Tempo PERSON ID:" + objects[i].TEMPO_PERSON_ID + "</i><br/> Name: <i>"+ objects[i].PERSON_NAME + "</i><br/>";
+                         //org_html += "Physical Address:<i>" + objects[i].ORG_PHYS_ADDR_LINE1 +","+ objects[i].ORG_PHYS_ADDR_CITY +","+ objects[i].ORG_PHYS_ADDR_STATE_CODE +","+ objects[i].ORG_PHYS_ADDR_ZIP +"</i><br />";
+                         person_html += "Mailing Address:<i>" + objects[i].PERSON_MAIL_ADDR_LINE1 +","+ objects[i].PERSON_MAIL_ADDR_CITY +","+ objects[i].PERSON_MAIL_ADDR_STATE_CODE +","+ objects[i].PERSON_MAIL_ADDR_ZIP +"</i></li>";
+                }
+                person_html += "</ul>";
+                $("#person_suggestion-box").show();
+                $("#person_suggestion-box").html(person_html);
+                $("#person_owner_id").css("background","#FFF");
+        }
+        });
+    });
+
+    // use type ahead to find owner ID
+//    $("#fac_owner_id").keyup(function(){
+//        if( this.value.length < 4 ) return;
+//        $.ajax({
+//        type: "GET",
+//        url: api_url + "organization/owneroperatorlist?",
+//        data:'owneroperatorname=C'+$(this).val()+'&inclinactiveflag=N',
+//        beforeSend: function(){
+//                $("#fac_owner_id").css("background","#FFF  no-repeat 165px");
+//        },
+//        success: function(data){
+//                var objects =  $.parseJSON(JSON.stringify(data['result']));
+//                var owner_html = '<ul id="owner-list">';
+//                for (var i in objects) {
+//                    owner_html += "<li class='list-group-item' onClick=selectOwnerId("+ objects[i].TEMPO_ID + ",\'" + objects[i].OWNEROP_IS_PERSON + "\'" +")>" +"Owner ID:<i>"+objects[i].ALT_ID+ "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Tempo Org ID:" + objects[i].TEMPO_ID + "</i><br/> Name: <i>"+ objects[i].OWNEROPER_NAME + "</i><br/>";
+//                    owner_html += "Mailing Address:<i>" + objects[i].OWNEROPER_MAIL_ADDR_LINE1 +","+ objects[i].OWNEROPER_MAIL_ADDR_CITY +","+ objects[i].OWNEROPER_MAIL_ADDR_STATE_CODE +","+ objects[i].OWNEROPER_MAIL_ADDR_ZIP +"</i></li>";
+//                }
+//                owner_html += "</ul>";
+//                $("#owner-box").show();
+//                $("#owner-box").html(owner_html);
+//                $("#fac_owner_id").css("background","#FFF");
+//        }
+//        });
+//    });
+
+    // use type ahead to find organization ID
+    $("#rel_org_id").keyup(function(){
+		if( this.value.length < 4 ) return;
+		$.ajax({
+		type: "GET",
+		url: api_url + "organization/list?bureau=PSTB",
+		data:'orgname=C'+$(this).val()+'&inclinactiveflag=N',
+		beforeSend: function(){
+				$("#rel_org_id").css("background","#FFF  no-repeat 165px");
+		},
+		success: function(data){
+				var objects =  $.parseJSON(JSON.stringify(data['result']));
+				var org_html = '<ul id="organization-list">';
+				for (var i in objects) {
+					 org_html += "<li class='list-group-item' onClick=selectOrganizationId("+ objects[i].TEMPO_ORG_ID +")>" +"Owner ID:<i>"+objects[i].ALT_ORG_ID+ "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Tempo Org ID:" + objects[i].TEMPO_ORG_ID + "</i><br/> Name: <i>"+ objects[i].ORG_NAME + "</i><br/>";
+					 org_html += "Mailing Address:<i>" + objects[i].ORG_MAIL_ADDR_LINE1 +","+ objects[i].ORG_MAIL_ADDR_CITY +","+ objects[i].ORG_MAIL_ADDR_STATE_CODE +","+ objects[i].ORG_MAIL_ADDR_ZIP +"</i></li>";
+				}
+				org_html += "</ul>";
+				$("#suggesstion-box").show();
+				$("#suggesstion-box").html(org_html);
+				$("#rel_org_id").css("background","#FFF");
+		}
+		});
+    });
+
+    function selectOwnerId(id, is_person) {
+        $("#fac_owner_id").val(id);
+        $("#owner-box").hide();
+        if(is_person == 'Y') {
+            $('#person_owner').val('Y');
+        }else if (is_person == 'N') {
+            $('#person_owner').val('N');
+        }else {
+            alert('The owner you choose is neither a person nor organization. Please contact OIT for assistance!');
+        }        
+    }
+
+    function selectPersonId(val) {
+        $("#person_owner_id").val(val);
+        $("#person_suggestion-box").hide();
+    }
+
+    function selectOrganizationId(val) {
+        $("#rel_org_id").val(val);
+        $("#suggesstion-box").hide();
+    }
+ 
+    // load the one stop contacts
+    function loadOneStopContacts(){
+        $.ajax({
+            url: api_url + "facility/details?bureau=PSTB&aiid=" + tempo_ai_id,
+            method:"GET",
+            dataType: 'json',
+            success: function(data) {
+                var onestop_contacts = data.result['faciOneStopTele_cur'];
+                $.each(onestop_contacts, function(i, result) {
+                    var onestop_html = '<tr>'
+                    onestop_html +='<td>' + convertNulltoEmpty(result.TITLE) + '</td>';
+                    onestop_html +='<td>' + convertNulltoEmpty(result.FULL_NAME) + '</td>';
+                    onestop_html +='<td>' + convertNulltoEmpty(result.COMMENTS) + '</td>';
+                    onestop_html +='<td>' + convertNulltoEmpty(result.EMAIL_ADDRESS) + '</td>';
+                    onestop_html +='<td>' + convertNulltoEmpty(result.PHONE_NUMBER) + '</td>';
+                    onestop_html +='<td><button type="button" name="update_onestop" class="btn btn-info btn-xs update" id=update_fac_onestop_' + result.ONESTOP_ID + '>Update</button></td>';
+                    onestop_html +='<td><button type="button" name="delete_onestop" class="btn btn-danger btn-xs delete" id=delete_fac_onestop_' + result.ONESTOP_ID + '>Delete</button></td>';
+                    onestop_html += "</tr>"
+                    $('#fac_onestop_list tbody').append(onestop_html);
+                });
+                
+                $('#fac_onestop_list').DataTable({
+                    "searching": false,
+                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                    "columnDefs":[
+                        {
+                            "targets":[5, 6],
+                            "orderable": false,
+                        }
+                    ]
+                });
+            }        
+        });
+    }
+
+    $('#remedial_action_list').DataTable({
+        "searching": false,
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        "order": [[ 1, "desc" ]],
+    });
+
+    // load Remedial Actions List
+    // function loadRemedialActionsList(){
+    //     $.ajax({
+    //         url: api_url + "facility/releases/list?aiid=" + tempo_ai_id,
+    //         method:"GET",
+    //         dataType: 'json',
+    //         success: function(data) {
+    //             var releases = data.result;
+    //             $.each(releases, function(i, result) {
+    //                 var release_html = '<tr>'
+    //                 release_html += '<td><a href="' + base_url + 'remediation/remedial_action_info/' + tempo_ai_id + '/' + result.TEMPO_SI_ID + '">' + result.RELEASE_ID + '</td>';
+    //                 release_html += '<td>' + format_date(convertNulltoEmpty(result.REPORT_DATE)) + '</td>';
+    //                 release_html += '<td>' + result.RELEASE_DESCRIPTION + '</td>';
+    //                 release_html += '<td></td>';
+    //                 // release_html += '<td>';
+    //                 // release_html += '<button type="button" name="release_transfer" class="btn btn-danger btn-xs"  data-toggle="modal" data-target="#findFacilityModal" id=release_transfer_' + result.RELEASE_ID + ' onclick="showReleaseTransferForm(this.id)">Transfer</button>';
+    //                 // release_html += '</td>';
+    //                 release_html += "</tr>"
+    //                 $('#remedial_action_list tbody').append(release_html);
+    //             });
+
+    //             $('#remedial_action_list').DataTable({
+    //                 "searching": false,
+    //                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+    //                 "order": [[ 1, "desc" ]],
+    //             });
+    //         },
+    //     });
+
+    // }
+    
+    // load Facility History table
+    function loadFacilityHistory(){
+        $.ajax({
+            url: api_url + "facility/details?bureau=PSTB&aiid=" + tempo_ai_id,
+            method:"GET",
+            dataType: 'json',
+            success: function(data) {
+                var history_records = data.result['AltHistInfo_cur'];
+                $.each(history_records, function(i, result) {
+                    var history_html = '<tr>'
+                    history_html += '<td>' + result.ALT_ID + '</td>';
+                    history_html += '<td>' + result.ALT_NAME + '</td>';
+                    history_html += '<td>' + result.ALT_ID_TYPE + '</td>';
+                    history_html += '<td>' + format_date(convertNulltoEmpty(result.START_DATE)) + '</td>';
+                    history_html += '<td>' + format_date(convertNulltoEmpty(result.END_DATE)) + '</td>';
+		    //<td><span data-toggle="tooltip" title="superlongcomment" style="white-space:nowrap;width:10px;overflow:hidden;text-overflow:ellipsis">superlongcommentstestsuperlongcommentstest<superlongcommentstest<superlongcommentstest<superlongcommentstest<superlongcommentstest<superlongcommentstest<superlongcommentstest<superlongcommentstest</span></td>';
+                    // history_html += '<td>';
+                    // if (result.END_DATE !== null){
+                    //     history_html += '<button type="button" name="edit_end_date" class="btn btn-info btn-xs" id=edit_end_date_' + result.ALT_ID_TYPE + '_' + result.ALT_ID + ' onclick="showFacilityHistoryForm(this.id)">Edit End Date</button>';
+                    // }
+                    // history_html += '</td>';
+                    history_html += "</tr>"
+                    $('#historic_owner_list tbody').append(history_html);
+                });
+
+                $('#historic_owner_list').DataTable({
+                    "searching": false,
+                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                    "order": [[ 3, "desc" ]],
+                });
+            },
+        });
+    }
+
+    // load Facility Person relationships table
+    function loadFacilityPersonRelationships(){
+        $.ajax({
+            url: api_url + "facility/details?bureau=PSTB&aiid=" + tempo_ai_id,
+            method:"GET",
+            dataType: 'json',
+            success: function(data) {
+                var ppl_relationships = data.result['faciPerson_cur'];
+                $.each(ppl_relationships, function(i, result) {
+		   // $.ajax({
+		   //     url: api_url + "organization/persondetails?bureau=PSTB&personid=" + result.PERSON_ID,
+		//	method:"GET",
+		//	dataType: 'json',
+		//	success: function(data) {
+
+			    //var alt_person_id = data.result['personMain_cur'][0].ALT_PERSON_ID;
+	
+                    	    var ppl_rel_html = '<tr>'
+        	            ppl_rel_html +='<td>' + convertNulltoEmpty(result.PERSON_ID) + '</td>';
+        	            ppl_rel_html +='<td>';
+                	    // add link to owner and operator
+	                    if(result.RELATION_CODE == 'be' || result.RELATION_CODE == 'bh') {
+        	                ppl_rel_html += '<a href="' + base_url + 'organizations/person_details/' + result.PERSON_ID + '">';
+                	    }
+	                    ppl_rel_html += convertNulltoEmpty(result.PERSON_NAME) + '</td>';
+        	            ppl_rel_html +='<td>' + convertFacilityPersonRelation(convertNulltoEmpty(result.RELATION_DESC)) + '</td>';
+                	    ppl_rel_html +='<td>' + format_date(convertNulltoEmpty(result.START_DATE)) + '</td>';
+	                    ppl_rel_html +='<td>' + format_date(convertNulltoEmpty(result.END_DATE)) + '</td>';
+			    ppl_rel_html +='<td>' + '<button type="button" name="update_ppl_relation" class="btn btn-info btn-xs end_person" id=update_ppl_relation_' + result.RELATION_CODE + '_' + result.PERSON_ID + ' onclick="showUpdatePersonRelForm(this.id)">Update</button>';
+                	    ppl_rel_html +='<td>';
+	                    // only allow users to end relationships like owner(be), operator(bh), responsible party(gd), remediation contact(fy) & owns the business(do)
+        	            if (result.END_DATE === null && (result.RELATION_CODE == 'fy' || result.RELATION_CODE == 'be' || result.RELATION_CODE == 'gd' || result.RELATION_CODE == 'bh' || result.RELATION_CODE == 'do')){
+                        	ppl_rel_html +='<button type="button" name="delete_ppl_relation" class="btn btn-danger btn-xs end_person" id=delete_ppl_relation_' + result.RELATION_CODE + '_' + result.PERSON_ID + ' onclick="showEndPersonRelForm(this.id)">End</button>';
+                    }
+                    	    ppl_rel_html += '</td><td><button type="button" name="delete_person_relation" class="btn btn-danger btn-xs delete_person_relation" id="delete_person_relation_' + result.RELATION_CODE + '_' + result.PERSON_ID + '" onclick="deletePersonRelation(this.id)">Delete</button></td></tr>';
+                 	    $('#ppl_relationships_list tbody').append(ppl_rel_html);
+		//	},
+		//    });
+                });
+
+            $('#ppl_relationships_list').DataTable({
+                "searching": false,
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "order": [[ 3, "desc" ]],
+                "columnDefs":[
+                    {
+                        "targets":[5],
+                        "orderable": false,
+                    }
+                ]
+            });
+        },
+        });
+    }
+
+    // load Facility Organization Relationships table
+    function loadFacilityOrganizationRelationships(){   
+        $.ajax({
+            url: api_url + "organization/relorglist?bureau=PSTB&aiid=" + tempo_ai_id,
+            method:"GET",
+            success: function(data) {
+                var results = data.result;
+                if (tempo_ai_id != ''){
+                    $.each(results, function(i, result) {
+                        var phy_address1 = result.ORG_PHYS_ADDR_LINE1 != null ? result.ORG_PHYS_ADDR_LINE1 : '';
+                        var phy_address2 = result.ORG_PHYS_ADDR_LINE2 != null ? ', ' + result.ORG_PHYS_ADDR_LINE2 : '';
+                        var phy_address3 = result.ORG_PHYS_ADDR_LINE3 != null ? ', ' + result.ORG_PHYS_ADDR_LINE3 : '';
+                        var phy_city = result.ORG_PHYS_ADDR_CITY != null ? ', ' + result.ORG_PHYS_ADDR_CITY : '';
+                        var phy_state = result.ORG_PHYS_ADDR_STATE_CODE != null ? ', ' + result.ORG_PHYS_ADDR_STATE_CODE : '';
+                        var phy_zip = result.ORG_PHYS_ADDR_ZIP != null ? ' ' + result.ORG_PHYS_ADDR_ZIP : '';
+                        var phy_address = phy_address1 + phy_address2 + phy_address3 + phy_city + phy_state + phy_zip;
+
+                        var mail_address1 = result.ORG_MAIL_ADDR_LINE1 != null ? result.ORG_MAIL_ADDR_LINE1 : '';
+                        var mail_address2 = result.ORG_MAIL_ADDR_LINE2 != null ? ', ' + result.ORG_MAIL_ADDR_LINE2 : '';
+                        var mail_address3 = result.ORG_MAIL_ADDR_LINE3 != null ? ', ' + result.ORG_v_ADDR_LINE3 : '';
+                        var mail_city = result.ORG_MAIL_ADDR_CITY != null ? ', ' + result.ORG_MAIL_ADDR_CITY : '';
+                        var mail_state = result.ORG_MAIL_ADDR_STATE_CODE != null ? ', ' + result.ORG_MAIL_ADDR_STATE_CODE : '';
+                        var mail_zip = result.ORG_MAIL_ADDR_ZIP != null ? ' ' + result.ORG_MAIL_ADDR_ZIP : '';
+                        var mail_address = mail_address1 + mail_address2 + mail_address3 + mail_city + mail_state + mail_zip;
+
+                        if(phy_address !== ''){
+                            var address = phy_address;
+                        }else{
+                            var address = mail_address;
+                        }
+
+                        var html = '<tr>'
+                        html +='<td>' + result.ALT_ORG_ID + '</td>';
+                        html +='<td><a href="' + base_url + 'organizations/organization_details/' + result.TEMPO_ORG_ID + '">' + convertNulltoEmpty(result.ORG_NAME) + '</td>';
+                        html +='<td>' + address + '</td>';
+                        html +='<td>' + convertFacilityOrganizationRelation(convertNulltoEmpty(result.RELATIONSHIP_DESC)) + '</td>';
+                        html +='<td>' + format_date(convertNulltoEmpty(result.ORG_START_DATE)) + '</td>';
+                        html +='<td>' + format_date(convertNulltoEmpty(result.ORG_END_DATE)) + '</td>';
+                        html +='<td>';
+			html +='<button type="button" name="update_relation" class="btn btn-info btn-xs update_org_relation" id=update_org_relation_' + result.RELATIONSHIP_CODE + '_' + result.TEMPO_ORG_ID + '_' + result.ALT_ORG_ID + ' onclick="showUpdateOrgRelForm(this.id)">Update</button>';
+
+                        html += '</td><td>';
+                        // only allow users to end relationships like owner(ea), operator(fa) and responsible party(ge)
+                        if (result.ORG_END_DATE === null && (result.RELATIONSHIP_CODE == 'ea' || result.RELATIONSHIP_CODE == 'ge' || result.RELATIONSHIP_CODE == 'fa')){
+                            html += '<button type="button" name="end_relationship" class="btn btn-danger btn-xs end" id=end_fac_relationship_' + result.RELATIONSHIP_CODE + '_' + result.TEMPO_ORG_ID + ' onclick="showEndOrgRelForm(this.id)">End</button>';
+                        }
+
+                        html +='</td><td><button type="button" name="delete_org_relation" class="btn btn-danger btn-xs delete_org_relation" id="delete_org_relation_' + result.RELATIONSHIP_CODE + '_' + result.TEMPO_ORG_ID + '_' + result.ALT_ORG_ID + '" onclick="deleteOrgRelation(this.id)">Delete</button></td></tr>';
+                        $('#fac_relationships_list tbody').append(html);
+                    });
+                }
+                /*DataTables instantiation.*/
+                $('#fac_relationships_list').DataTable({
+                    "searching": false,
+                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                    "order": [[ 3, "desc" ]],
+                    "columnDefs":[
+                        {
+                            "targets":[6],
+                            "orderable": false,
+                        }
+                    ]
+                });
+            },
+            dataType: 'json',
+        });
+    }
+
+    // add owner to new facility
+    function AddFacilityOwner(tempoaiid, is_person){
+        if($('#is_person').val() == 'N') {
+            var url = api_url + "facility/relationship/" + tempoaiid;
+        }else if($('#is_person').val() == 'Y') {
+            var url = api_url + "facility/personrelationship/" + tempoaiid;
+        }
+        
+        var data = {
+                bureau: "PSTB",
+                altaiid: "",
+                docid: "0",
+                orgid: $("#tempo_id").val(),
+                altorgid: "",
+                relcode: "ea",
+                startdate: reverse_format_date($('#fac_start_date').val()),
+                updateuserid: $('#fac_user').val(),
+                commitflag: "Y",
+        };
+        if($('#is_person').val() == 'Y'){
+            delete data.orgid;
+            data.personid = $("#tempo_id").val();
+            data.relcode = 'be';
+        }
+        $.ajax({
+            url: url,
+            method: "POST",
+            data: data,
+            success: function(data){
+		if(data.flag_outvar == 'N'){
+			alert(data.msg_outvar);
+			location.reload();
+		}
+            },
+            error: function(data) {
+                alert("Please use the typeahead to enter the organization ID");
+            }
+        });
+      }
+
+    // add or udpate facility detail and main contacts
+    function UpdateFacility(event){
+
+        event.preventDefault();
+        //cursorwait();
+	
+	//$('#submit_fac_detail_1, #submit_fac_detail_2').prop('disabled', true);
+        if(confirm("Are you sure you want to submit the facility information?")) {
+		var is_person = $('#is_person').val();
+	        var url = api_url + "facility/details/" + tempo_ai_id;
+        	var data = {
+	            bureau: "PSTB",
+        	    aiid: "",
+	            altaiid: "",
+        	    docid: "0",
+	            ainame: $('#facility_name').val(),
+        	    aitypecode: $('#facility_type').val(),
+	            aialttypecode: $('#alt_facility_type').val(),
+        	    aiusergroup: "",
+	            startdate: reverse_format_date($('#fac_start_date').val()),
+        	    enddate: "",
+	            phyaddress1: $('#fac_phy_addr_1').val(),
+        	    phyaddress2: $('#fac_phy_addr_2').val(),
+	            phyaddress3: $('#fac_phy_addr_3').val(),
+        	    phycity: $('#fac_phy_city').val(),
+	            phystate: $('#fac_phy_state').val(),
+        	    phyzip: $('#fac_phy_zip').val(),
+	            mailaddress1: $('#fac_mail_addr_1').val(),
+        	    mailaddress2: $('#fac_mail_addr_2').val(),
+	            mailaddress3: $('#fac_mail_addr_3').val(),
+        	    mailcity: $('#fac_mail_city').val(),
+	            mailstate: $('#fac_mail_state').val(),
+		    mailzip: $('#fac_mail_zip').val(),
+	            aicomments: $('#ai_comments').val(),
+		    fieldofficecode: $('#field_office').val(),
+        	    regioncode: $('#district_office').val(),
+	            latitude: $('#lat').val(),
+        	    longitude: $('#long').val(),
+	            ownertempoorgid: "",
+        	    owneraltid: "",
+	            updateuserid: $('#fac_user').val(),
+        	    commitflag: "Y",
+	        };
+        	if(tempo_ai_id == ''){
+	            var method = "POST";
+        	}else{
+	            var method = "PUT";
+		    if($(document.activeElement).prop('id') == 'change_name_action'){
+			data.ainame = $('#new_fac_name').val();
+			name_change_date = reverse_format_date($('#name_change_date').val());
+			data.startdate = name_change_date;
+			data.dateofnamechange = name_change_date;
+		    }
+	        }
+
+	        $.ajax({
+        	    url: url,
+	            method: method,
+	            data: data,
+        	    success: function(data){
+		    	if(data['flag_outvar'] == 'N'){
+				alert('You have encountered an error, please contact OIT for assistance');
+				var url = base_url + "facility/facility_info/" + tempo_ai_id;
+				window.location.replace(url);
+				//document.body.style.cursor = "auto";
+			}else{
+                		if(tempo_ai_id == ''){
+                    			tempoaiid = data['tempoaiid_outvar'];
+	                    		AddFacilityOwner(tempoaiid, is_person);
+        	            		UpdateFacContact(tempoaiid);
+                		} else{
+                    			UpdateFacContact(tempo_ai_id);
+	                	}
+			}
+	            },
+        	    error: function (data) {
+                	alert("Facility create or update failed, please contact OIT");
+	                $('submit_fac_detail_1, #submit_fac_detail_2').prop('disabled', false);
+        	    },
+        	});
+	}
+    }
+
+    // add or update facility main contact
+    function UpdateFacContact(tempo_ai_id){
+        var telecom_url = api_url + "organization/comm/" + tempo_ai_id;
+        var contacts = [
+            {
+                bureau: "pstb",
+                entitytype: "AGENCY_INTEREST",
+                tempodocid: "0",
+                telecomtypecode: "WP",
+                newaddressrphone: $('#fac_phone').val(),
+                updateuserid: $('#fac_user').val(),
+               commitflag: "Y"
+            },
+            {
+                bureau: "pstb",
+                entitytype: "AGENCY_INTEREST",
+                tempodocid: "0",
+                telecomtypecode: "EM",
+                newaddressrphone: $('#fac_email_addr').val(),
+                updateuserid: $('#fac_user').val(),
+                commitflag: "Y"
+            }
+        ];
+
+        $.ajax({
+            url: api_url + "facility/details?bureau=PSTB&aiid=" + tempo_ai_id,
+            method:"GET",
+            dataType: 'json',
+            success: function(data) {
+                var main_contacts = data.result['faciTele_cur'];
+                var email = main_contacts.find(function(e){
+                    return e.TELECOM_TYPE_CODE == 'EM'
+                });
+                var phone = main_contacts.find(function(e){
+                    return e.TELECOM_TYPE_CODE == 'WP'
+                });
+
+                if (typeof phone == 'undefined' && typeof email == 'undefined'){
+                    var method = ["POST", 'POST'];
+                } else if (typeof phone != 'undefined' && typeof email == 'undefined'){
+                    var method = ["PUT", 'POST'];
+                    contacts[0].previousaddressrphone = phone.TELECOM_INFORMATION;
+                } else if (typeof phone == 'undefined' && typeof email != 'undefined'){
+                    var method = ["POST", 'PUT'];
+                    contacts[1].email = email.TELECOM_INFORMATION;
+                } else{
+                    var method = ["PUT", 'PUT'];
+                    contacts[0].previousaddressrphone = phone.TELECOM_INFORMATION;
+                    contacts[1].previousaddressrphone = email.TELECOM_INFORMATION;
+                }
+
+                $.each(contacts, function(i, contact) {
+                    $.ajax({
+                        url: telecom_url,
+                        method: method[i],
+                        data: contact,
+                        success: function(data){
+                        },
+                        error: function(data) {
+                            alert('Something is wrong, please contact OIT');
+                            $('#submit_fac_detail_1, #submit_fac_detail_2').prop('disabled', false);
+                        }
+                    });
+                });
+                alert('The facility has been created/updated successfully.');
+                var url = base_url + "facility/facility_info/" + tempo_ai_id;
+                window.location.replace(url);
+                //document.body.style.cursor = "auto";
+            },
+        });
+    }
+
+    // copy physical address to mailing address
+    function CopyFacilityAddress(){
+        $("#fac_mail_addr_1").val($("#fac_phy_addr_1").val());
+        $("#fac_mail_addr_2").val($("#fac_phy_addr_2").val());
+        $("#fac_mail_addr_3").val($("#fac_phy_addr_3").val());
+        $("#fac_mail_city").val($("#fac_phy_city").val());
+        $("#fac_mail_state").val($("#fac_phy_state").val());
+        $("#fac_mail_zip").val($("#fac_phy_zip").val());
+    }
+
+    // show find owner form
+    function ShowFindOwnerForm(){
+        $("#owner_number").focus();
+    }
+
+    // show find organization form
+    function ShowFindOrgForm(){
+    	$("#tempo_organization_id").focus();
+    }
+
+    // show find person form
+    function ShowFindPersonForm(){
+    	$("#tempo-person-id").focus();
+    }
+
+    // show empty facility onestop contact form
+    function ShowEmptyOSForm(){
+        $("#os_title" ).val('');
+        $('#full_name').val('');
+        $('#comments').val('');
+        $('#email').val('');
+        $('#phone').val('');
+        $('.modal-title').text('Add Contact');
+        $('#fac_os_action').val('Add');
+        $("#os_title" ).focus();
+    }
+
+    // show update facility onestop form
+    $(document).on('click', '.update', function(){
+        var update_id = $(this).prop('id');
+        var onestop_id = update_id.substring(update_id.lastIndexOf('_')+1);
+        $.ajax({
+            url: api_url + "facility/details?bureau=PSTB&aiid=" + tempo_ai_id,
+            method: 'GET',
+            success: function(data){
+                var item = data.result['faciOneStopTele_cur'].find(function(e){
+                    return e.ONESTOP_ID == onestop_id
+                });
+                $('#facOnestopModal').modal('show');
+                $('#onestop_id').val(onestop_id);
+                $('#os_title').val(item.TITLE);
+                $('#full_name').val(item.FULL_NAME);
+                $('#comments').val(item.COMMENTS);
+                $('#email').val(item.EMAIL_ADDRESS);
+                $('#phone').val(item.PHONE_NUMBER);
+                $('.modal-title').text('Edit Contact');
+                $('#fac_os_action').val('Update');
+            },
+            error: function(data) {
+                alert("Something is wrong, please contact OIT");
+            }
+        });
+    });
+
+    // show empty facility person form
+    function ShowEmptyPersonRelForm(){
+        $('#person_name_div').show();
+        $('#person_rel_div').show();
+        $('#person_start_date_div').show();
+        $('#person_end_date_div').hide();
+        $('#person_owner_div').hide();
+        $('#person_owner_id').prop('required', false);
+        $('#person_end_date_div').prop('required', false);
+        $('#person_start_date_div').prop('required', true);
+        $('#rel_per_id').prop('required', true);
+        $('#rel_per_id').val('');
+        $('#person_rel').val('fy');
+        $('#person_start_date').val('');
+        $('.modal-title').text('Add Relationship');
+        $('#person_action').val('Add');
+    }
+
+    // show update facility person relation form
+    function showUpdatePersonRelForm(button_id){
+	var update_id_arr = button_id.split( '_' );
+	var person_id = update_id_arr[ update_id_arr.length - 1 ];
+	var relcode = update_id_arr[ update_id_arr.length - 2 ];
+
+	$.ajax({
+		url: api_url + "facility/details?bureau=PSTB&aiid=" + tempo_ai_id,
+		method: 'GET',
+		success: function(data){
+			var item = data.result.faciPerson_cur.find(function(e){
+				return e.PERSON_ID == person_id;
+			});
+			$('#person_name_div').hide();
+			$('#person_rel_div').hide();
+			$('#person_owner_div').hide();
+			$('#person_start_date_div').show();
+			$('#person_end_date_div').show();
+
+			if(relcode == 'fy') {
+				$('#rel_per_id').prop('required', true);
+				$('#person_owner_id').prop('required', false);
+				$('#rel_per_id').val(person_id);
+			} else {
+				$('#rel_per_id').prop('required', false);
+				$('#person_owner_id').prop('required', true);
+				$('#person_owner_id').val(person_id);
+			}
+			$('#person_end_date').prop('required', false);
+			$('#person_start_date').prop('required', true);
+			$('#person_rel').val(relcode);
+				
+			$('#person_start_date').val(format_date(item.START_DATE));
+			$('#person_end_date').val(format_date(item.END_DATE));
+			$('#personRelationshipModal').modal('show');
+			$('.modal-title').text('Update Relationship');
+			$('#person_action').val('Update');
+		},
+		error: function(data) {
+			alert("Something is wrong, please contact OIT");
+		}
+	});
+    }
+
+    // show end facility person form
+    function showEndPersonRelForm(button_id){
+        var delete_id_arr = button_id.split( '_' );
+        var person_id = delete_id_arr[ delete_id_arr.length - 1 ];
+        var relcode = delete_id_arr[ delete_id_arr.length - 2 ];
+
+        $('#person_name_div').hide();
+        $('#person_rel_div').hide();
+        $('#person_start_date_div').hide();
+        $('#person_end_date_div').show();
+        $('#person_end_date').prop('required', true);
+        $('#person_start_date').prop('required', false);
+        $('#rel_per_id').prop('required', false);
+
+        // in case users want to end person or relation that aren't in the list yet
+        $('#person_id').val(person_id);
+        $('#person_relation').val(relcode);
+        $('#person_end_date').val('');
+        $('#personRelationshipModal').modal('show');
+        $('.modal-title').text('End Relationship');
+        $('#person_action').val('End');
+    }
+
+    // show end facility person relationship form
+    function showFacilityHistoryForm(button_id){
+        var edit_id_arr = button_id.split( '_' );
+        var person_id = edit_id_arr[ edit_id_arr.length - 1 ];
+        var relcode = edit_id_arr[ edit_id_arr.length - 2 ];
+
+        $('#person_name_div').hide();
+        $('#person_rel_div').hide();
+        $('#person_start_date_div').hide();
+        $('#person_end_date_div').show();
+        $('#person_end_date').prop('required', true);
+        $('#person_start_date').prop('required', false);
+        $('#rel_per_id').prop('required', false);
+
+        // in case users want to end person or relation that aren't in the list yet
+        $('#person_id').val(person_id);
+        $('#person_relation').val(relcode);
+        $('#person_end_date').val('');
+        $('#personRelationshipModal').modal('show');
+        $('.modal-title').text('End Relationship');
+        $('#person_action').val('End');
+    }
+
+    // show empty facility organization relationship form
+    function ShowEmptyOrgRelForm(){
+        $('#org_id_div').show();
+        $('#org_relation_div').show();
+        $('#org_end_date_div').hide();
+        $('#org_start_date_div').show();
+        $('#org_end_date_div').prop('required', false);
+        $('#org_start_date_div').prop('required', true);
+        $('#relationship').val('ea');
+        $('#rel_org_id').val('');
+        $('#org_rel_start_date').val('');
+        $('#person_start_date_lbl').html("Start date");
+        $('.modal-title').text('Add Relationship');
+        $('#org_action').val('Add');
+    }
+
+    // show end facility organization relationship form
+    function showEndOrgRelForm(button_id){
+        var delete_id_arr = button_id.split( '_' );
+        var org_id = delete_id_arr[ delete_id_arr.length - 1 ];
+        var relcode = delete_id_arr[ delete_id_arr.length - 2 ];
+
+        $('#org_id_div').hide();
+        $('#org_relation_div').hide();
+        $('#org_end_date_div').show();
+        $('#org_start_date_div').hide();
+        $('#org_end_date_div').prop('required', true);
+        $('#org_start_date_div').prop('required', false);
+        $('#relationshipModal').modal('show');
+        $('#rel_org_id').val(org_id);
+        $('#relationship').val(relcode);
+        $('#previous_relation').val(relcode);
+        $('#org_rel_end_date').val('');
+        $('#person_end_date_lbl').html("End date");
+        $('.modal-title').text('End Relationship');
+        $('#org_action').val('End');
+    }
+
+    // show update facility organization relationship form
+    function showUpdateOrgRelForm(button_id){
+        var update_id_arr = button_id.split( '_' );
+        var alt_org_id = update_id_arr[ update_id_arr.length - 1 ];
+	var org_id = update_id_arr[ update_id_arr.length - 2 ];
+        var relcode = update_id_arr[ update_id_arr.length - 3 ];
+        $.ajax({
+            url: api_url + "organization/relorglist?bureau=PSTB&aiid=" + tempo_ai_id,
+            method: 'GET',
+            success: function(data){
+                var item = data.result.find(function(e){
+                    return e.TEMPO_ORG_ID == org_id;
+                });
+                $('#org_id_div').hide();
+                $('#org_relation_div').hide();
+                $('#org_end_date_div').show();
+                $('#org_start_date_div').show(); 
+                $('#org_start_date_div').prop('required', true);
+                $('#relationshipModal').modal('show');
+                $('#rel_org_id').val(org_id);
+                $('#relationship').val(relcode);
+		$('#previous_relation').val(relcode);
+                $('#org_rel_end_date').val(format_date(item.ORG_END_DATE));
+                $('#org_rel_start_date').val(format_date(item.ORG_START_DATE));
+                $('.modal-title').text('Update Relation');
+                $('#org_action').val('Update');
+            },
+            error: function(data) {
+                alert("Something is wrong, please contact OIT");
+            }
+        });
+    }
+
+    // delete facility onestop contact
+    $(document).on('click', '.delete', function(){
+        var delete_id = $(this).prop('id');
+        var onestop_id = delete_id.substring(delete_id.lastIndexOf('_')+1);
+        var $button = $(this);
+        var onestopTable = $('#fac_onestop_list').DataTable();
+        if(confirm("Are you sure you want to delete this?")){
+            $.ajax({
+                url: onestop_url + onestop_id,
+                method: 'DELETE',
+                data: {
+                    contacttype: "facility",
+                    updateuserid: $('#fac_user').val(),
+                    commitflag: "Y",
+                },
+                success: function(data){
+                    onestopTable.row( $button.parents('tr') ).remove().draw();
+                },
+                error: function(data) {
+                    alert("Something is wrong, please contact OIT");
+                }
+            });
+        }else{
+            return false;
+        }
+    });
+
+    // submit find facility form
+    function submitFindFacilityForm(event){
+        event.preventDefault();
+        var ownerTable = $('#release_transfer_facility_list').DataTable();
+        var owner_radio = $('input:radio[name="owner"]:checked').val();
+        if(owner_radio == 'owner_number'){
+            var search_criterion = 'FacID';
+            var search_content = $('#owner_number').val();
+        } else if(owner_radio == 'owner_name'){
+            var search_criterion = 'AIname';
+            var search_content = $('#owner_name_select').val() + $('#owner_name').val();
+        } else if(owner_radio == 'owner_address'){
+            var search_criterion = 'AIaddr';
+            var search_content = $('#owner_addr_select').val() + $('#owner_address').val();
+        }
+        
+        $.ajax({
+            url: api_url + "facility/list/Y?bureau=pstb&" + search_criterion + '=' + search_content,
+            method: "GET",
+            success: function(data){
+                ownerTable.clear().destroy();
+                $('#owner_list tbody').empty();
+                $('#owner_list_div').show();
+                var owners = data.result;
+                $.each(owners, function(i, result) {
+                    var owner_html = '<tr>'
+                    owner_html +='<td>' + convertNulltoEmpty(result.ALT_ID) + '</td>';
+                    owner_html +='<td>' + convertNulltoEmpty(result.TEMPO_ID) + '</td>';
+                    owner_html +='<td>' + convertNulltoEmpty(result.OWNEROP_IS_PERSON) + '</td>';
+                    owner_html +='<td>' + convertNulltoEmpty(result.OWNEROPER_NAME) + '</td>';
+                    owner_html +='<td>' + convertNulltoEmpty(result.OWNEROPER_PHYS_ADDR_LINE1) + '</td>';
+                    owner_html +='<td>' + convertNulltoEmpty(result.OWNEROPER_PHYS_ADDR_CITY) + '</td>';
+                    owner_html +='<td>' + convertNulltoEmpty(result.OWNEROPER_PHYS_ADDR_ZIP) + '</td>';
+                    owner_html += "</tr>"
+                    $('#owner_list tbody').append(owner_html);
+                });
+                
+                $('#owner_list').DataTable({
+                    "searching": false,
+                    "lengthChange": false,
+                    "columnDefs": [
+                        {
+                            "targets": [ 1, 2 ],
+                            "visible": false
+                        }
+                    ]
+                });
+            },
+            error: function(data) {
+                alert("Something is wrong, please contact OIT");
+            }
+        });
+    }
+
+    // submit find person form
+    function submitFindPersonForm(event){
+    	event.preventDefault();
+	var personTable = $('#person_list').DataTable();
+	var person_radio = $('input:radio[name="person"]:checked').val();
+	if(person_radio == 'tempo-person-id'){
+		var search_criterion = 'tempopersonid';
+		var search_content = $('#tempo-person-id').val();
+		var url = api_url + "organization/personlist?bureau=PSTB&" + search_criterion + '=' + search_content;
+	} else if(person_radio == 'person_oid'){
+		var search_criterion = 'ownerid';
+		var search_content = $('#person_oid').val();
+		var url = api_url + "organization/owneroperatorlist?" + search_criterion + '=' + search_content;
+	} else if(person_radio == 'person_name'){
+		var search_criterion = 'personname';
+		var search_content = $('#person_name_select').val() + encodeURIComponent($('#person_name').val());
+		var url = api_url + "organization/personlist?bureau=PSTB&" + search_criterion + '=' + search_content;
+	} else if(person_radio == 'person_address'){
+		var search_criterion = 'personaddress';
+		var search_content = $('#person_addr_select').val() + encodeURIComponent($('#person_address').val());
+		var url = api_url + "organization/personlist?bureau=PSTB&" + search_criterion + '=' + search_content;
+	}
+
+	$.ajax({
+		url: url,
+		method: "GET",
+		success: function(data){
+			personTable.clear().destroy();
+			$('#person_list tbody').empty();
+			$('#person_list_div').show();
+			var person = data.result;
+			$.each(person, function(i, result) {
+				var person_html = '<tr>';
+				// search by Owner ID
+				if(!person[0].hasOwnProperty('TEMPO_PERSON_ID')){
+					person_html +='<td>' + convertNulltoEmpty(result.TEMPO_ID) + '</td>';
+					person_html +='<td>' + convertNulltoEmpty(result.OWNEROPER_NAME) + '</td>';
+					person_html +='<td>' + convertNulltoEmpty(result.OWNEROPER_PHYS_ADDR_LINE1) + '</td>';
+					person_html +='<td>' + convertNulltoEmpty(result.OWNEROPER_PHYS_ADDR_CITY) + '</td>';
+					person_html +='<td>' + convertNulltoEmpty(result.OWNEROPER_PHYS_ADDR_ZIP) + '</td>';
+				}else{ // search by other criteria
+					person_html +='<td>' + convertNulltoEmpty(result.TEMPO_PERSON_ID) + '</td>';
+					person_html +='<td>' + convertNulltoEmpty(result.PERSON_NAME) + '</td>';
+					person_html +='<td>' + convertNulltoEmpty(result.PERSON_PHYS_ADDR_LINE1) + '</td>';
+					person_html +='<td>' + convertNulltoEmpty(result.PERSON_PHYS_ADDR_CITY) + '</td>';
+					person_html +='<td>' + convertNulltoEmpty(result.PERSON_PHYS_ADDR_ZIP) + '</td>';
+				}
+				person_html += "</tr>";
+				$('#person_list tbody').append(person_html);
+			});
+
+			$('#person_list').DataTable({
+				"searching": false,
+				"lengthChange": false,
+			});
+		},
+		error: function(data) {
+			alert("Something is wrong, please contact OIT");
+		}
+	});
+    }
+
+    // submit find org form
+    function submitFindOrgForm(event){
+    	event.preventDefault();
+	var orgTable = $('#org_list').DataTable();
+	var org_radio = $('input:radio[name="organization"]:checked').val();
+	if(org_radio == 'tempo_organization_id'){
+		var search_criterion = 'tempoorgid';
+		var search_content = $('#tempo_organization_id').val();
+		var url = api_url + "organization/list?bureau=PSTB&" + search_criterion + '=' + search_content;
+	} else if(org_radio == 'org_oid'){
+		var search_criterion = 'ownerid';
+		var search_content = $('#org_oid').val();
+		var url = api_url + "organization/owneroperatorlist?" + search_criterion + '=' + search_content;
+	} else if(org_radio == 'organization_name'){
+		var search_criterion = 'orgname';
+		var search_content = $('#organization_name_select').val() + encodeURIComponent($('#organization_name').val());
+		var url = api_url + "organization/list?bureau=PSTB&" + search_criterion + '=' + search_content;
+	} else if(org_radio == 'organization_address'){
+		var search_criterion = 'orgaddress';
+		var search_content = $('#organization_addr_select').val() + encodeURIComponent($('#organization_address').val());
+		var url = api_url + "organization/list?bureau=PSTB&" + search_criterion + '=' + search_content;
+	}
+
+	$.ajax({
+		url: url,
+		method: "GET",
+		success: function(data){
+			orgTable.clear().destroy();
+			$('#org_list tbody').empty();
+			$('#org_list_div').show();
+			var orgs = data.result;
+			$.each(orgs, function(i, result) {
+				var org_html = '<tr>';
+				// search by Owner ID
+				if(!orgs[0].hasOwnProperty('TEMPO_ORG_ID')){
+					org_html +='<td>' + convertNulltoEmpty(result.TEMPO_ID) + '</td>';
+					org_html +='<td>' + convertNulltoEmpty(result.OWNEROPER_NAME) + '</td>';
+					org_html +='<td>' + convertNulltoEmpty(result.OWNEROPER_PHYS_ADDR_LINE1) + '</td>';
+					org_html +='<td>' + convertNulltoEmpty(result.OWNEROPER_PHYS_ADDR_CITY) + '</td>';
+					org_html +='<td>' + convertNulltoEmpty(result.OWNEROPER_PHYS_ADDR_ZIP) + '</td>';
+				}else{ //search by other criteria
+					org_html +='<td>' + convertNulltoEmpty(result.TEMPO_ORG_ID) + '</td>';
+					org_html +='<td>' + convertNulltoEmpty(result.ORG_NAME) + '</td>';
+					org_html +='<td>' + convertNulltoEmpty(result.ORG_PHYS_ADDR_LINE1) + '</td>';
+					org_html +='<td>' + convertNulltoEmpty(result.ORG_PHYS_ADDR_CITY) + '</td>';
+					org_html +='<td>' + convertNulltoEmpty(result.ORG_PHYS_ADDR_ZIP) + '</td>';
+				}
+				org_html += "</tr>";
+				$('#org_list tbody').append(org_html);
+			});
+
+			$('#org_list').DataTable({
+				"searching": false,
+				"lengthChange": false,
+			});
+		},
+		error: function(data) {
+			alert("Something is wrong, please contact OIT");
+		}
+	});
+    }
+
+    // submit find owner form
+    function submitFindOwnerForm(event){
+        event.preventDefault();
+        var ownerTable = $('#owner_list').DataTable();
+        var owner_radio = $('input:radio[name="owner"]:checked').val();
+        if(owner_radio == 'owner_number'){
+            var search_criterion = 'ownerid';
+            var search_content = $('#owner_number').val();
+        } else if(owner_radio == 'owner_name'){
+            var search_criterion = 'owneroperatorname';
+            var search_content = $('#owner_name_select').val() + encodeURIComponent($('#owner_name').val());
+        } else if(owner_radio == 'owner_address'){
+            var search_criterion = 'owneroperatoraddress';
+            var search_content = $('#owner_addr_select').val() + encodeURIComponent($('#owner_address').val());
+        }
+        
+        $.ajax({
+            url: api_url + "organization/owneroperatorlist?" + search_criterion + '=' + search_content,
+            method: "GET",
+            success: function(data){
+                ownerTable.clear().destroy();
+                $('#owner_list tbody').empty();
+                $('#owner_list_div').show();
+                var owners = data.result;
+                $.each(owners, function(i, result) {
+                    var owner_html = '<tr>'
+                    owner_html +='<td>' + convertNulltoEmpty(result.ALT_ID) + '</td>';
+                    owner_html +='<td>' + convertNulltoEmpty(result.TEMPO_ID) + '</td>';
+                    owner_html +='<td>' + convertNulltoEmpty(result.OWNEROP_IS_PERSON) + '</td>';
+                    owner_html +='<td>' + convertNulltoEmpty(result.OWNEROPER_NAME) + '</td>';
+                    owner_html +='<td>' + convertNulltoEmpty(result.OWNEROPER_PHYS_ADDR_LINE1) + '</td>';
+                    owner_html +='<td>' + convertNulltoEmpty(result.OWNEROPER_PHYS_ADDR_CITY) + '</td>';
+                    owner_html +='<td>' + convertNulltoEmpty(result.OWNEROPER_PHYS_ADDR_ZIP) + '</td>';
+                    owner_html += "</tr>"
+                    $('#owner_list tbody').append(owner_html);
+                });
+                
+                $('#owner_list').DataTable({
+                    "searching": false,
+                    "lengthChange": false,
+                    "columnDefs": [
+                        {
+                            "targets": [ 1, 2 ],
+                            "visible": false
+                        }
+                    ]
+                });
+            },
+            error: function(data) {
+                alert("Something is wrong, please contact OIT");
+            }
+        });
+    }
+
+    // submit facility onestop form
+    function submitFacOnestopForm(event){
+        event.preventDefault();
+        $('#facOnestopModal').modal('hide');
+        var onestopTable = $('#fac_onestop_list').DataTable();
+        if($('#fac_os_action').val() == 'Add'){
+            var url = onestop_url + facility_id;
+            var method = "POST";
+        }else if($('#fac_os_action').val() == 'Update'){
+            var url = onestop_url + $('#onestop_id').val();
+            var method = "PUT";
+        }else{
+            return false;
+        }
+        $.ajax({
+            url: url,
+            method: method,
+            data: {
+                contacttype: "facility",
+                title: $('#os_title').val(),
+                fullname: $('#full_name').val(),
+                email: $('#email').val(),
+                phone: $('#phone').val(),
+                comments: $('#comments').val(),
+                updateuserid: $('#fac_user').val(),
+                commitflag: "Y",
+            },
+            success: function(data){
+                onestopTable.clear().destroy();
+                $('#fac_onestop_list tbody').empty();
+                loadOneStopContacts();
+            },
+            error: function(data) {
+                alert("Something is wrong, please contact OIT");
+            }
+        });
+    }
+
+    // end relationship between facility and organization
+    function endOrgRelation(org_id, relcode){
+    
+        var facrelationshipTable = $('#fac_relationships_list').DataTable();
+        var facHistoryTable = $('#historic_owner_list').DataTable();
+
+        $.ajax({
+            url: api_url + "facility/relationship/" + tempo_ai_id,
+            method: 'DELETE',
+            data: {
+                bureau: "PSTB",
+                altaiid: "",
+                docid: "0",
+                orgid: org_id,
+                altorgid: "",
+                relcode: relcode,
+                enddate: reverse_format_date($('#org_rel_end_date').val()),
+                updateuserid: $('#fac_user').val(),
+                commitflag: "Y",
+            },
+            success: function(data){
+                $('#relationshipModal').modal('hide');
+                facrelationshipTable.clear().destroy();
+                facHistoryTable.clear().destroy();
+                $('#fac_relationships_list tbody').empty();
+                $('#historic_owner_list tbody').empty();
+                loadFacilityOrganizationRelationships();
+                loadFacilityHistory();
+            },
+            error: function(data) {
+                alert("Something is wrong, please contact OIT");
+            }
+        });
+    }
+
+    // delete facility organization relation
+    function deleteOrgRelation(button_id){
+	if(confirm("Are you sure you want to delete this facility organization relation?")) {
+		var delete_id_arr = button_id.split( '_' );
+		var alt_org_id = delete_id_arr[ delete_id_arr.length - 1 ];
+		var org_id = delete_id_arr[ delete_id_arr.length - 2 ];
+		var relcode = delete_id_arr[ delete_id_arr.length - 3 ];
+		var facrelationshipTable = $('#fac_relationships_list').DataTable();
+		var facHistoryTable = $('#historic_owner_list').DataTable();
+		$.ajax({
+			url: api_url + "facility/relationship/" + tempo_ai_id,
+			method: 'DELETE',
+			data: {
+				// use PSTBDEL for deleting relation, use PSTB for ending relation
+				bureau: "PSTBDEL",
+				aiid: tempo_ai_id,
+				altaiid: "",
+				docid: "0",
+				orgid: org_id,
+				altorgid: alt_org_id,
+				relcode: relcode,
+				enddate: "",
+				updateuserid: $('#fac_user').val(),
+				commitflag: "Y",
+			},
+			success: function(data){
+				facrelationshipTable.clear().destroy();
+				facHistoryTable.clear().destroy();
+				$('#fac_relationships_list tbody').empty();
+				$('#historic_owner_list tbody').empty();
+				loadFacilityOrganizationRelationships();
+				loadFacilityHistory();
+			},
+			error: function(data) {
+				alert("Something is wrong, please contact OIT");
+			}
+		});
+	}
+    }
+
+    // submit facility organization relationship form
+    function submitOrgRelationForm(event){
+        event.preventDefault();
+        var facrelationshipTable = $('#fac_relationships_list').DataTable();
+        organization_id = $('#rel_org_id').val();
+        previous_relation = $('#previous_relation').val();
+        new_relation = $('#relationship').val();
+        $.ajax({
+            url: api_url + "organization/relorglist?bureau=PSTB&aiid=" + tempo_ai_id,
+            method:"GET",
+            success: function(data) {
+                var results = data.result;
+                var new_relation_org = results.find(function(e){
+                    return e.TEMPO_ORG_ID == organization_id && e.RELATIONSHIP_CODE == new_relation
+                });
+                var old_relation_org = results.find(function(e){
+                    return e.TEMPO_ORG_ID == organization_id && e.RELATIONSHIP_CODE == previous_relation
+                });
+
+                if($('#org_action').val() == 'End'){
+                    // format end date from MM/DD/YYYY to YYYY-MM-DD in case of IE browser
+		    var end_date = $('#org_rel_end_date').val();
+		    if(end_date.indexOf("/") >= 0){
+		    	end_date = moment($('#org_rel_end_date').val(), 'MM/DD/YYYY').format('YYYY-MM-DD');
+		    }
+		    
+		    if(format_date(old_relation_org.ORG_START_DATE) > end_date){
+                        alert('Please enter an end date no earlier than start date');
+                    } else {
+                        endOrgRelation(organization_id, previous_relation);
+                    }
+                }else if ($('#org_action').val() == 'Update'){
+                /*    if( typeof new_relation_org !== 'undefined' ){
+                        alert('A same organization with the same relationship already exists.');
+                    }else{
+                        if(format_date(old_relation_org.ORG_START_DATE) > $('#org_rel_end_date').val()){
+                            alert('Please enter an end date no earlier than start date');
+                        } else { */
+
+                            $.ajax({
+                                url: api_url + "facility/relationship/" + tempo_ai_id,
+                                method: 'PUT',
+                                data: {
+                                    bureau: "PSTB",
+                                    altaiid: "",
+                                    docid: "0",
+                                    orgid: $('#rel_org_id').val(),
+                                    altorgid: new_relation_org.ALT_ORG_ID,
+                                    relcode: previous_relation,
+				    startdate: reverse_format_date($('#org_rel_start_date').val()),
+                                    enddate: reverse_format_date($('#org_rel_end_date').val()),
+                                    updateuserid: $('#fac_user').val(),
+                                    commitflag: "Y",
+                                },
+                                success: function(data){
+                                    addOrgRelation(event);
+                                },
+                                error: function(data) {
+                                    alert("Something is wrong, please contact OIT");
+                                }
+                            });
+                    /*    }
+                    }*/
+                } else if($('#org_action').val() == 'Add'){
+                    if( typeof new_relation_org !== 'undefined' ){
+                        alert('A same organization with the same relationship already exists.');
+                    }else{
+                        // check if users add a new owner
+                        if(new_relation == 'ea'){
+                            $.ajax({
+                                url: api_url + "organization/relorglist?bureau=PSTB&aiid=" + tempo_ai_id,
+                                method: "GET",
+                                success: function(data) {
+                                    var org_owner = data.result.find(function(e){
+                                        return e.RELATIONSHIP_CODE == 'ea' && e.ORG_END_DATE == null;
+                                    });
+                                    // check if an organization owner exists
+                                    if( typeof org_owner !== 'undefined' ){
+                                        alert('There is an active organization owner exists, please end date it if you want to add a new owner')
+                                    }else {
+                                        $.ajax({
+                                            url: api_url + "facility/details?bureau=PSTB&aiid=" + tempo_ai_id,
+                                            method: "GET",
+                                            success: function(data) {
+                                                var person_owner = data.result['faciPerson_cur'].find(function(e){
+                                                    return e.RELATION_CODE == 'be' && e.END_DATE == null;
+                                                });
+                                                // check if a person owner exists
+                                                if( typeof person_owner !== 'undefined' ){
+                                                    alert('There is an active person owner exists, please end date it if you want to add a new owner')
+                                                }else {
+                                                    addOrgRelation(event);
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        }else {
+                            addOrgRelation(event);
+                        }
+                    }
+                } else {
+                    alert("This action is neither create or update, please contact OIT")
+                }
+            }
+        });
+    }
+
+    // add facility organization relationship
+    function addOrgRelation(event){
+        event.preventDefault();
+        var facrelationshipTable = $('#fac_relationships_list').DataTable();
+        var facHistoryTable = $('#historic_owner_list').DataTable();
+
+        $.ajax({
+            url: api_url + "facility/relationship/" + tempo_ai_id,
+            method: "POST",
+            data: {
+                bureau: "PSTB",
+                altaiid: "",
+                docid: "0",
+                orgid: $("#rel_org_id").val(),
+                altorgid: "",
+                relcode: $('#relationship').val(),
+                startdate: reverse_format_date($('#org_rel_start_date').val()),
+                updateuserid: $('#fac_user').val(),
+                commitflag: "Y",
+            },
+            success: function(data){
+                $('#relationshipModal').modal('hide');
+                facrelationshipTable.clear().destroy();
+                facHistoryTable.clear().destroy();
+                $('#fac_relationships_list tbody').empty();
+                $('#historic_owner_list tbody').empty();
+                loadFacilityOrganizationRelationships();
+                loadFacilityHistory();
+            },
+            error: function(data) {
+                alert("Please use the typeahead to select an Organization ID");
+            }
+        });
+    }
+
+    // submit facility person relationship form
+    function submitPersonRelationForm(event){
+
+        event.preventDefault();
+        var new_relation_code = $('#person_rel').val();
+        var existing_relation_code = $('#person_relation').val();
+        var existing_person_id = $('#person_id').val();
+
+        $.ajax({
+            url: api_url + "facility/details?bureau=PSTB&aiid=" + tempo_ai_id,
+            method:"GET",
+            success: function(data) {
+                var results = data.result['faciPerson_cur'];
+                var person = results.find(function(e){
+                    return e.PERSON_ID == existing_person_id && e.RELATION_CODE == existing_relation_code && e.END_DATE == null
+                });
+
+                if($('#person_action').val() == 'End'){
+			// format end date from MM/DD/YYYY to YYYY-MM-DD in case of IE browser
+			var end_date = $('#person_end_date').val();
+			if(end_date.indexOf("/") >= 0){
+				end_date = moment($('#person_end_date').val(), 'MM/DD/YYYY').format('YYYY-MM-DD');
+			}
+
+                    if(format_date(person.START_DATE) > end_date){
+                        alert('Please enter an end date no earlier than start date');
+                    } else {
+                        endPersonRelation(existing_person_id, existing_relation_code);
+                    }
+                } else if($('#person_action').val() == 'Update'){
+			var relation_code = $('#person_rel').val();
+			if(relation_code == 'fy') {
+				person_id = $('#rel_per_id').val();
+			} else {
+				person_id = $('#person_owner_id').val();
+			}	
+			updatePersonRelation(person_id, relation_code);
+		} else if($('#person_action').val() == 'Add'){
+                    if( typeof person !== 'undefined' ){
+                        alert('The person you are trying to add already exists, is active and in the same role as the one you are trying to specify. They may not be added to this facility');
+                    } else{
+                        // check if users add a new owner
+                        if(new_relation_code == 'be'){
+                            $.ajax({
+                                url: api_url + "organization/relorglist?bureau=PSTB&aiid=" + tempo_ai_id,
+                                method: "GET",
+                                success: function(data) {
+                                    var org_owner = data.result.find(function(e){
+                                        return e.RELATIONSHIP_CODE == 'ea' && e.ORG_END_DATE == null;
+                                    });
+                                    // check if an organization owner exists
+                                    if( typeof org_owner !== 'undefined' ){
+                                        alert('There is an active organization owner exists, please end date it if you want to add a new owner')
+                                    }else {
+                                        $.ajax({
+                                            url: api_url + "facility/details?bureau=PSTB&aiid=" + tempo_ai_id,
+                                            method: "GET",
+                                            success: function(data) {
+                                                var person_owner = data.result['faciPerson_cur'].find(function(e){
+                                                    return e.RELATION_CODE == 'be' && e.END_DATE == null;
+                                                });
+                                                // check if a person owner exists
+                                                if( typeof person_owner !== 'undefined' ){
+                                                    alert('There is an active person owner exists, please end date it if you want to add a new owner')
+                                                }else {
+                                                    addPersonRelation(event);
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        }else {
+                            addPersonRelation(event);
+                        }
+                    }
+                }
+            },
+            error: function(){
+                alert('Something is wrong, please contact OIT');
+            }
+        });
+    }
+
+
+    // add facility person relationship
+    function addPersonRelation(event){
+        event.preventDefault();
+        var personrelationshipTable = $('#ppl_relationships_list').DataTable();
+        var facHistoryTable = $('#historic_owner_list').DataTable();
+        var new_relation_code = $('#person_rel').val();
+        if(new_relation_code == 'fy') {
+            var new_person_id = $('#rel_per_id').val();
+        }else {
+            var new_person_id = $('#person_owner_id').val();
+        }
+
+        $.ajax({
+            url: api_url + "facility/personrelationship/" + tempo_ai_id,
+            method: "POST",
+            data: {
+                bureau: "PSTB",
+                altaiid: "",
+                docid: "0",
+                personid: new_person_id,
+                relcode: $('#person_rel').val(),
+                startdate: reverse_format_date($('#person_start_date').val()),
+                updateuserid: $('#fac_user').val(),
+                commitflag: "Y",
+            },
+            success: function(data){
+                $('#personRelationshipModal').modal('hide');
+                personrelationshipTable.clear().destroy();
+                facHistoryTable.clear().destroy();
+                $('#ppl_relationships_list tbody').empty();
+                $('#historic_owner_list tbody').empty();
+                loadFacilityPersonRelationships();
+                loadFacilityHistory();
+            },
+            error: function(data) {
+                alert("Something is wrong, please contact OIT");
+            }
+        });
+    }
+
+    // end facility person relationship
+    function endPersonRelation(person_id, relation_code){
+        var personrelationshipTable = $('#ppl_relationships_list').DataTable();
+        var facHistoryTable = $('#historic_owner_list').DataTable();
+        $.ajax({
+            url: api_url + "facility/personrelationship/" + tempo_ai_id,
+            method: 'DELETE',
+            data: {
+                bureau: "PSTB",
+                altaiid: "",
+                docid: "0",
+                personid: person_id,
+                altorgid: "",
+                relcode: relation_code,
+                enddate: reverse_format_date($('#person_end_date').val()),
+                updateuserid: $('#fac_user').val(),
+                commitflag: "Y",
+            },
+            success: function(data){
+                $('#personRelationshipModal').modal('hide');
+                personrelationshipTable.clear().destroy();
+                facHistoryTable.clear().destroy();
+                $('#ppl_relationships_list tbody').empty();
+                $('#historic_owner_list tbody').empty();
+                loadFacilityPersonRelationships();
+                loadFacilityHistory();
+            },
+            error: function(data) {
+                alert("Something is wrong, please contact OIT");
+            }
+        });
+    }
+
+    // delete facility person relation
+    function deletePersonRelation(button_id){
+    	if(confirm("Are you sure you want to delete this facility person relation?")) {
+		var delete_id_arr = button_id.split( '_' );	
+		var person_id = delete_id_arr[ delete_id_arr.length - 1 ];
+		var relcode = delete_id_arr[ delete_id_arr.length - 2 ];
+
+		var personrelationshipTable = $('#ppl_relationships_list').DataTable();
+		var facHistoryTable = $('#historic_owner_list').DataTable();
+		
+		$.ajax({
+			url: api_url + "organization/persondetails?bureau=PSTB&personid=" + person_id,
+			method:"GET",
+			dataType: 'json',
+			success: function(data) {
+				
+				$.ajax({
+					url: api_url + "facility/personrelationship/" + tempo_ai_id,
+					method: "DELETE",
+					data: {
+						// PSTBDEL is to delete relation, PSTB is end relation
+						bureau: "PSTBDEL",
+						aiid: tempo_ai_id,
+						altaiid: "",
+						docid: "0",
+						personid: person_id,
+						altpersonid: "",
+						relcode: relcode,
+						enddate: "",
+						updateuserid: $('#fac_user').val(),
+						commitflag: "Y",
+					},
+					success: function(data){
+						personrelationshipTable.clear().destroy();
+						facHistoryTable.clear().destroy();
+						$('#ppl_relationships_list tbody').empty();
+						$('#historic_owner_list tbody').empty();
+						loadFacilityPersonRelationships();
+						loadFacilityHistory();
+					},
+					error: function(data) {
+						alert("Something is wrong, please contact OIT");
+					}
+				});
+			}
+		});
+	}
+    }
+
+    // update facility person relationship
+    function updatePersonRelation(person_id, relation_code){
+    	var personrelationshipTable = $('#ppl_relationships_list').DataTable();
+	var facHistoryTable = $('#historic_owner_list').DataTable();
+	$.ajax({
+		url: api_url + "organization/persondetails?bureau=PSTB&personid=" + person_id,
+		method:"GET",
+		dataType: 'json',
+		success: function(data) {
+
+			$.ajax({
+				url: api_url + "facility/personrelationship/" + tempo_ai_id,
+				method: 'PUT',
+				data: {
+					bureau: "PSTB",
+					altaiid: "",
+					docid: "0",
+					personid: person_id,
+					altpersonid: "",
+					relcode: relation_code,
+					startdate: reverse_format_date($('#person_start_date').val()),
+					enddate: reverse_format_date($('#person_end_date').val()),
+					updateuserid: $('#fac_user').val(),
+					commitflag: "Y",
+				},
+				success: function(data){
+					$('#personRelationshipModal').modal('hide');
+					personrelationshipTable.clear().destroy();
+					facHistoryTable.clear().destroy();
+					$('#ppl_relationships_list tbody').empty();
+					$('#historic_owner_list tbody').empty();
+					loadFacilityPersonRelationships();
+					loadFacilityHistory();
+				},
+				error: function(data) {
+					alert("Something is wrong, please contact OIT");
+				}
+			});
+		},
+	});
+    }
+
+    function getRegionByCity(){
+        var city_name = encodeURIComponent($('#fac_phy_city').val());
+        var county_code;
+        if (city_name !== ""){
+            $.ajax({
+                url: api_url + "/reference/region/" + city_name,
+                method: "GET",
+                success: function(data){
+                    var do_code = data.result[0]['DISTRICT_CODE'];
+                    county_code = data.result[0]['COUNTY_CODE'];
+                    $("#district_office").val(do_code);
+                    loadFieldOfficeandCountyList(do_code, county_code);
+                }
+            });
+        }
+    }
+
+    // load all field offices
+    function LoadAllFieldOffices(field_office_code){
+        $.ajax({
+            url: api_url + "reference/fieldoffice/Y/ALL",
+            method: "GET",
+            success: function(data){
+                var field_offices = data.result;
+                $.each(field_offices, function () {
+                    var selected = (this['FIELD_OFFICE_CODE'] == field_office_code) ? true : false;
+                    $("#field_office").append($("<option></option>").val(this['FIELD_OFFICE_CODE']).html(this['FIELD_OFFICE_DESCRIPTION']).prop("selected", selected));
+                });
+             }
+        });
+    }
+
+    // load field office list and county list
+    function loadFieldOfficeandCountyList(district_office_code, county_code) {
+    	if (district_office_code !== ""){
+	    $.ajax({
+                url: api_url + "reference/fieldoffice/Y/" + district_office_code,
+                method: "GET",
+                success: function(data){
+                    var field_office_code = $('#field_office_code').val();
+                    var field_offices = data.result;
+                    $("#field_office").empty();
+                    $("#field_office").append($("<option></option>").val('').html('Please Select'));
+                    if(field_offices.length == 0){
+                       	LoadAllFieldOffices(field_office_code);
+                    }else{
+                       	$.each(field_offices, function () {
+                            var selected = (this['FIELD_OFFICE_CODE'] == field_office_code) ? true : false;
+                            $("#field_office").append($("<option></option>").val(this['FIELD_OFFICE_CODE']).html(this['FIELD_OFFICE_DESCRIPTION']).prop("selected", selected));
+                       	});
+               	    }
+                }	
+            });
+            $.ajax({
+                url: api_url + "reference/county/Y/" + district_office_code,
+                method: "GET",
+                success: function(data){
+                    var counties = data.result;
+                    $("#county").empty();
+                    $("#county").append($("<option></option>").val('').html('Please Select'));
+                    $.each(counties, function () {
+                        var selected = (this['COUNTY_CODE'] == county_code) ? true : false;
+                        $("#county").append($("<option></option>").val(this['COUNTY_CODE']).html(this['COUNTY_DESCRIPTION']).prop("selected", selected));
+                    });
+                }
+            });
+        }
+    }
+
+</script>

@@ -1,0 +1,11 @@
+<?php defined('SYSPATH') or die('No direct script access.'); ?>
+
+2018-08-10 08:33:12 -06:00 --- error: Uncaught PHP Error: oci_execute(): ORA-12899: value too large for column &quot;USTX&quot;.&quot;INSPECTIONS&quot;.&quot;CASE_ID&quot; (actual: 14, maximum: 7) in file /home/env/Kohana_Applications/tanks/libraries/drivers/Database/Oracle.php on line 177
+2018-08-10 08:38:31 -06:00 --- error: Uncaught PHP Error: oci_execute(): ORA-12899: value too large for column &quot;USTX&quot;.&quot;INSPECTIONS&quot;.&quot;CASE_ID&quot; (actual: 14, maximum: 7) in file /home/env/Kohana_Applications/tanks/libraries/drivers/Database/Oracle.php on line 177
+2018-08-10 09:10:56 -06:00 --- error: Uncaught PHP Error: oci_execute(): ORA-01438: value larger than specified precision allowed for this column in file /home/env/Kohana_Applications/tanks/libraries/drivers/Database/Oracle.php on line 177
+2018-08-10 09:43:30 -06:00 --- error: Uncaught PHP Error: oci_execute(): ORA-01438: value larger than specified precision allowed for this column in file /home/env/Kohana_Applications/tanks/libraries/drivers/Database/Oracle.php on line 177
+2018-08-10 15:13:07 -06:00 --- error: Uncaught PHP Error: oci_execute(): ORA-01438: value larger than specified precision allowed for this column in file /home/env/Kohana_Applications/tanks/libraries/drivers/Database/Oracle.php on line 177
+2018-08-10 15:13:29 -06:00 --- error: Uncaught PHP Error: oci_execute(): ORA-01438: value larger than specified precision allowed for this column in file /home/env/Kohana_Applications/tanks/libraries/drivers/Database/Oracle.php on line 177
+2018-08-10 15:14:21 -06:00 --- error: Uncaught PHP Error: oci_execute(): ORA-01438: value larger than specified precision allowed for this column in file /home/env/Kohana_Applications/tanks/libraries/drivers/Database/Oracle.php on line 177
+2018-08-10 15:14:50 -06:00 --- error: Uncaught PHP Error: oci_execute(): ORA-01438: value larger than specified precision allowed for this column in file /home/env/Kohana_Applications/tanks/libraries/drivers/Database/Oracle.php on line 177
+2018-08-10 15:15:31 -06:00 --- error: Uncaught PHP Error: oci_execute(): ORA-01438: value larger than specified precision allowed for this column in file /home/env/Kohana_Applications/tanks/libraries/drivers/Database/Oracle.php on line 177
